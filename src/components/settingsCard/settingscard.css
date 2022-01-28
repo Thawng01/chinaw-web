@@ -1,0 +1,56 @@
+.settingCard {
+    display: flex;
+    border-radius: 7px;
+    margin: 15px;
+    width: 40%;
+    height: 100px;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    text-decoration: none;
+    -webkit-box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settingIconContainer {
+    background-color: antiquewhite;
+    height: 45px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.settingsIcon {
+    color: #3167cc;
+}
+
+.settingsItems {
+    margin-left: 10px;
+}
+
+.settingsItem {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.settingsDesc {
+    padding-right: 5px;
+    color: grey;
+    font-size: 1rem;
+}
+
+@media screen and (max-width: 950px) {
+    .settingCard {
+        width: 43%;
+    }
+}
+@media screen and (max-width: 800px) {
+    .settingCard {
+        width: 90%;
+        margin: 10px;
+    }
+}

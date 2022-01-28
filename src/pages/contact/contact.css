@@ -1,0 +1,79 @@
+.contactWrapper {
+    display: flex;
+    flex: 4;
+    margin: 15px;
+    justify-content: center;
+}
+
+.contactBox {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 450px;
+    align-items: center;
+    padding-top: 20px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contactInput {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+
+.contactInput:focus {
+    outline-color: #ff1a8c;
+    border-width: 1px;
+}
+
+.contactMessage {
+    width: 80%;
+    height: 200px;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    resize: none;
+}
+
+.contactMessage:focus {
+    outline-color: #ff1a8c;
+    border-width: 1px;
+}
+
+.contactBtn {
+    border: none;
+    padding: 10px;
+    background-color: #ff1a8c;
+    width: 80%;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 850px) {
+    .contactBox {
+        width: 90%;
+        height: 500px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .contactBox {
+        width: 90%;
+        height: 500px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .contactInput,
+    .contactMessage,
+    .contactBtn {
+        width: 90%;
+    }
+}

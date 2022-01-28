@@ -1,0 +1,133 @@
+.point {
+    display: flex;
+    flex: 1;
+}
+
+.pointContainer {
+    display: flex;
+    flex: 4;
+    align-items: center;
+    flex-direction: column;
+    margin: 15px;
+}
+
+.pointAmountLabel {
+    margin-bottom: 10px;
+}
+
+.pointNum {
+    color: #ff1a8c;
+}
+
+.pointInnerContainer {
+    height: 400px;
+    width: 60vw;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
+}
+
+.paymentMethods {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.paymentMethodBtns {
+    margin-top: 15px;
+}
+
+.paymentTopUp,
+.paymentKpay {
+    height: 33px;
+    width: 70px;
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+.paymentTopUp {
+    margin-right: 10px;
+}
+
+.paymentKpay {
+    margin-left: 10px;
+}
+
+.paymentsContainer {
+    display: flex;
+    flex: 1;
+    margin-top: 30px;
+}
+
+.noteForPayment {
+    flex: 1;
+    padding: 25px;
+}
+
+.warnings {
+    color: grey;
+    margin-bottom: 7px;
+}
+
+.paymentInputs {
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.paymentInput {
+    width: 60%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 0.7px solid lightgrey;
+    font-size: 17px;
+    margin: 7px 0;
+}
+
+.paymentInput:focus {
+    outline-color: #ff1a8c;
+    border-width: 1px;
+}
+
+.paymentSubmitBtn {
+    border: none;
+    background-color: #ff1a8c;
+    width: 60%;
+    padding: 11px 13px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 7px;
+}
+
+@media screen and (max-width: 850px) {
+    .paymentsContainer {
+        flex-direction: column;
+    }
+
+    .pointInnerContainer {
+        height: 80vw;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .pointInnerContainer {
+        height: 600px;
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .paymentInput {
+        width: 80%;
+    }
+
+    .paymentSubmitBtn {
+        width: 80%;
+    }
+}

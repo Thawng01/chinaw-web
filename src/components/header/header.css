@@ -1,0 +1,160 @@
+.header {
+    background-color: var(--primary);
+    display: flex;
+    height: 60px;
+    top: 0;
+    width: 100%;
+    position: sticky;
+    z-index: 99;
+}
+
+.headerWrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+}
+
+.headerMenuContainer {
+    margin-right: 10px;
+    cursor: pointer;
+    display: none;
+    height: 40px;
+    width: 40px;
+}
+
+.headerMenuContainer:active {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+}
+
+.headerMenuIcon {
+    color: #fff;
+    font-size: 30px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.headerLink {
+    text-decoration: none;
+}
+
+.headerTitle {
+    margin-right: 20px;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.headerLink:active {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+.headerCenter {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    width: 35%;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.headerSearchIcon {
+    margin: 0 10px;
+}
+
+.searchInput {
+    border: none;
+    width: 80%;
+    font-size: 17px;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.searchContainer {
+    margin-right: 23px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    display: none;
+}
+
+.headerLeftSearchIcon {
+    font-size: 25px;
+    color: #fff;
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+}
+
+.notificationContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 23px;
+    position: relative;
+    cursor: pointer;
+}
+
+.notiIcon {
+    color: #fff;
+}
+
+.notification {
+    position: absolute;
+    background-color: #fff;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    color: red;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    top: -5px;
+    right: -5px;
+}
+
+.accounts {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.account {
+    color: #fff;
+}
+
+.accountIcon {
+    color: #fff;
+    font-size: 20px;
+}
+
+/* for small device */
+
+@media screen and (max-width: 750px) {
+    .searchContainer {
+        display: block;
+    }
+
+    .headerCenter {
+        display: none;
+    }
+}
+
+/* for small device */
+@media screen and (max-width: 700px) {
+    .headerMenuContainer {
+        display: block;
+    }
+}

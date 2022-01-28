@@ -1,0 +1,38 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.profileBodyContainer {
+    display: flex;
+}
+
+.profileNewPostBtnContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileNewPostBtn {
+    margin: 15px 0;
+    background-color: var(--secondary);
+    height: 40px;
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.profileNewPostBtnLabel {
+    color: #fff;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 700px) {
+    .profileBodyContainer {
+        flex-direction: column;
+    }
+}

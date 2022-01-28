@@ -1,0 +1,25 @@
+.layout {
+    display: flex;
+    flex: 1;
+}
+
+.layoutContainer {
+    display: flex;
+    flex: 4;
+}
+
+@media screen and (max-width: 950px) {
+    .layoutContainer {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .layoutContainer {
+        flex: 1;
+    }
+}

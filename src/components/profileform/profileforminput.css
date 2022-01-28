@@ -1,0 +1,39 @@
+.profileUpdateInputs {
+    width: 75%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid grey;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.profileUpdateInput {
+    padding: 10px;
+    width: 100%;
+    border: none;
+}
+
+.profileUpdateInput:focus {
+    outline: none;
+}
+
+.profileUpdateBtn {
+    width: 75%;
+    padding: 10px;
+    background-color: #ff1a8c;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 650px) {
+    .profileUpdateInputs {
+        width: 95%;
+    }
+
+    .profileUpdateBtn {
+        width: 95%;
+    }
+}

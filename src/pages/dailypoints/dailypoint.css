@@ -1,0 +1,35 @@
+.dailypointContainer {
+    display: flex;
+    flex: 4;
+    flex-direction: column;
+    margin-top: 15px;
+    align-items: center;
+}
+
+.dailypointTitle {
+    font-size: 30;
+    margin-bottom: 7px;
+    text-align: center;
+}
+
+.dailypointSubtitle {
+    text-align: center;
+}
+
+.dailypointAppLink {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.appLink {
+    padding: 0 6px;
+    text-decoration: none;
+    color: #ff1a8c;
+    cursor: pointer;
+}
+
+/* @media screen and (max-width: 650px) {
+    .dailypointContainer {
+        align-items: flex-start;
+    }
+} */

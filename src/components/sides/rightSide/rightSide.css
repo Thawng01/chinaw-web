@@ -1,0 +1,16 @@
+.right {
+    display: flex;
+    flex: 1.7;
+    margin: 10px 10px 10px 0;
+    background-color: azure;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    margin-left: 15px;
+}
+
+.ad {
+    color: grey;
+}

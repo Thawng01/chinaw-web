@@ -1,0 +1,130 @@
+.register {
+    display: flex;
+    flex: 4;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+.registerContainer {
+    height: 65vh;
+    width: 60vw;
+    display: flex;
+    border-radius: 10px;
+}
+
+.welcomeTextContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 30px;
+}
+
+.welcomeText {
+    font-weight: bold;
+    font-size: 45px;
+    color: #000;
+}
+
+.welcomeDesc {
+    font-size: 25px;
+    font-weight: 700;
+    padding-top: 10px;
+    color: #000;
+}
+
+.registerInputContainer {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    border-radius: 10px;
+}
+
+.registerInputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+
+.registerInput {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #000;
+    font-size: 16.5px;
+    margin: 10px 0;
+    background-color: #f0f0f0;
+}
+
+.registerInput::placeholder {
+    color: grey;
+}
+
+.registerInput:focus {
+    outline: none;
+}
+
+.registerBtn {
+    width: 100%;
+    padding: 9px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff1a8c;
+    color: #fff;
+    cursor: pointer;
+    margin: 10px 0;
+    font-size: 17px;
+}
+
+.alreadyHaveAccount {
+    display: flex;
+    align-items: center;
+}
+
+.alreadyHaveAccountText {
+    color: #000;
+}
+
+.loginRegister {
+    color: #ff1a8c;
+    padding-left: 6px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 850px) {
+    .register {
+        justify-content: flex-start;
+    }
+
+    .registerContainer {
+        flex-direction: column;
+        margin-top: 40px;
+    }
+
+    .welcomeTextContainer {
+        flex: 0;
+    }
+
+    .welcomeText,
+    .welcomeDesc {
+        text-align: center;
+    }
+    .registerInputContainer {
+        flex: 0;
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .registerContainer {
+        width: 90vw;
+    }
+}

@@ -1,0 +1,64 @@
+.popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 99;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popupContainer {
+    width: 45%;
+    height: 80%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #fff;
+    align-items: center;
+}
+
+.postToDeleteContainer {
+    width: 70%;
+    height: 80%;
+    overflow: auto;
+}
+
+.confirmBtnContainer {
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirmBtn,
+.cancelBtn {
+    border: none;
+    display: flex;
+    border-radius: 20px;
+    height: 35px;
+    width: 120px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.confirmBtn span {
+    color: #fff;
+}
+.cancelBtn span {
+    color: #fff;
+}
+
+.confirmBtn {
+    margin-right: 25px;
+    background-color: var(--secondary);
+}
+.cancelBtn {
+    margin-left: 25px;
+    background-color: red;
+}

@@ -1,0 +1,8 @@
+.settingsContainer {
+    flex: 4;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: 100%;
+    margin: 15px;
+}

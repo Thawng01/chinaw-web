@@ -1,0 +1,9 @@
+.menu {
+    padding: 20px;
+    height: calc(100vh - 60px);
+    position: sticky;
+    overflow-y: scroll;
+    top: 60px;
+    background-color: #fff;
+    z-index: 99;
+}

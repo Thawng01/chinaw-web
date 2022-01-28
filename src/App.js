@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
+import { AuthContext } from "./components/auth/AuthContext";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
+
+import { store } from "./store/Store";
+import AppRoutes from "./AppRoutes";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [user, setUser] = useState(null);
+    const [message, setMessage] = useState(null);
+
+    useEffect(() => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user.uid);
+            } else {
+                setUser(null);
+            }
+        });
+    }, []);
+
+    return (
+        <AuthContext.Provider
+            value={{
+                isMenuOpen,
+                setIsMenuOpen,
+                user,
+                setUser,
+                message,
+                setMessage,
+            }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+            <Provider store={store}>
+                <Router>
+                    <AppRoutes />
+                </Router>
+            </Provider>
+        </AuthContext.Provider>
+    );
 }
 
 export default App;

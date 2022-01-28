@@ -1,0 +1,9 @@
+.faqs {
+    display: flex;
+    flex: 1;
+}
+
+.faqsContainer {
+    flex: 4;
+    margin: 15px;
+}

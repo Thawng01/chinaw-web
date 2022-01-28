@@ -1,0 +1,15 @@
+.appButton {
+    width: 75%;
+    background-color: #ff1a8c;
+    padding: 10px;
+    border: none;
+    border-radius: 7px;
+    color: #fff;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 650px) {
+    .appButton {
+        width: 95%;
+    }
+}

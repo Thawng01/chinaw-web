@@ -1,0 +1,148 @@
+.postWrapperInFeed {
+    margin: 15px 0;
+}
+
+.postCards {
+    background-color: white;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
+}
+
+.postCardTop {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.postCardUsername {
+    margin: 0 10px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #000;
+    font-weight: 600;
+    font-size: 17px;
+    text-transform: capitalize;
+}
+
+.postUsernameLink {
+    text-decoration: none;
+}
+
+.postCardDate {
+    color: grey;
+    font-size: 14px;
+}
+
+.postCardCenter {
+    margin-bottom: 10px;
+}
+
+.postCardUserImg {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.postDesc {
+    padding: 0 15px 8px 15px;
+}
+
+.readMore {
+    color: #ff1a8c;
+    cursor: pointer;
+}
+
+.postCardImg {
+    max-height: 300px;
+    width: 100%;
+    object-fit: contain;
+}
+
+.postLine {
+    height: 0.4px;
+    width: 100%;
+    background-color: lightgrey;
+}
+
+.postCardBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 20px;
+    padding: 17px 0;
+}
+
+.deletePostIconContainer,
+.editPostIconContainer,
+.likeIconContainer,
+.commentContainer,
+.saveIconContainer {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #000;
+}
+
+.deletePostIconContainer:active {
+    background-color: lightgray;
+}
+.editPostIconContainer:active {
+    background-color: lightgray;
+}
+
+.likeIconContainer:active {
+    background-color: lightgray;
+}
+
+.likeContainer {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.likeCount {
+    margin: 0 3px 0 7px;
+    font-size: 15px;
+    color: gray;
+}
+
+.likeCountLabel {
+    font-size: 15px;
+    color: gray;
+}
+
+.commentContainer {
+    position: relative;
+}
+
+.commentContainer:active {
+    background-color: lightgray;
+}
+
+.commentNum {
+    margin-right: 6px;
+    position: absolute;
+    color: red;
+    font-weight: 700;
+    right: -5px;
+    top: -5px;
+}
+
+.postIcon {
+    font-size: 24px;
+}
+
+.deleteIcon,
+.editIcon {
+    font-size: 24px;
+}
+
+.saveIconContainer:active {
+    background-color: lightgrey;
+}

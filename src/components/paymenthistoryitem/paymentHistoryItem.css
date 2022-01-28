@@ -1,0 +1,53 @@
+.paymentHistoryItem {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.paymentHistoryItemContainer {
+    background-color: #f2f2f2;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.paymentHistoryIcon {
+    margin-top: -3px;
+    color: lightgrey;
+}
+
+.paymentHistoryDetails {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 10px;
+}
+
+.paymentHistoryDetailContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.paymentHistoryLabel,
+.paymentHistoryValue {
+    color: grey;
+}
+
+@media screen and (max-width: 950px) {
+    .paymentHistoryDetails {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .paymentHistoryItem {
+        width: 80%;
+    }
+}

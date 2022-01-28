@@ -1,0 +1,6 @@
+.noPage {
+    display: flex;
+    flex: 4;
+    justify-content: center;
+    margin-top: 20px;
+}

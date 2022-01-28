@@ -1,0 +1,11 @@
+.profileUpdateImg {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
+
+.profimeImgUpdateBtn {
+    color: #ff1a8c;
+    cursor: pointer;
+    font-weight: 700;
+}

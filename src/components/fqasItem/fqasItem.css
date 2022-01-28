@@ -1,0 +1,38 @@
+.fqasAccordion {
+    display: flex;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    width: 70%;
+    border-radius: 2px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 10px 0 10px;
+    padding: 10px;
+}
+
+.accordionLabel {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.accordionIcon {
+    font-size: larger;
+    color: #ff1a8c;
+}
+
+.fqasAccordionDesc {
+    margin: 0 10px;
+    background-color: #f0f0f0;
+    width: 70%;
+    padding: 7px 12px;
+}
+
+@media screen and (max-width: 500px) {
+    .fqasAccordion {
+        width: 90%;
+    }
+
+    .fqasAccordionDesc {
+        width: 90%;
+    }
+}

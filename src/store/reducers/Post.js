@@ -1,0 +1,26 @@
+import {
+    FETCH_POSTS,
+    FETCH_SAVED_POST,
+    FETCH_SINGLE_POST,
+} from "../actions/Post";
+
+const initialValue = {
+    posts: [],
+    post: {},
+    savedPosts: [],
+};
+
+export default (state = initialValue, { type, payload }) => {
+    switch (type) {
+        case FETCH_POSTS:
+            return { ...state, posts: payload };
+
+        case FETCH_SINGLE_POST:
+            return { ...state, post: payload };
+
+        case FETCH_SAVED_POST:
+            return { ...state, savedPosts: payload };
+        default:
+            return state;
+    }
+};

@@ -1,0 +1,10 @@
+.settingCardContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 800px) {
+    .settingCardContainer {
+        justify-content: center;
+    }
+}

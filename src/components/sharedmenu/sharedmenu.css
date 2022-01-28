@@ -1,0 +1,54 @@
+.leftWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.leftProfileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.leftProfileImg {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.leftProfileInfos {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    align-items: center;
+}
+
+.leftProfileUsername {
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.leftDesc {
+    font-size: 15px;
+    color: grey;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.leftPoint {
+    color: #ff1a8c;
+    margin-top: 5px;
+}
+
+.leftLine {
+    height: 1px;
+    width: 100%;
+    background-color: #f0f0f0;
+}
+
+.leftItems {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0px 0;
+}
