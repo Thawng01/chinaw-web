@@ -4,7 +4,7 @@ const initialValue = {
     points: [],
 };
 
-export default (state = initialValue, { type, payload }) => {
+const Point = (state = initialValue, { type, payload }) => {
     switch (type) {
         case FETCH_POINT_CLAIM:
             return { ...state, points: payload };
@@ -13,3 +13,5 @@ export default (state = initialValue, { type, payload }) => {
             return state;
     }
 };
+
+export default Point;

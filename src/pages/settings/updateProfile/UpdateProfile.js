@@ -1,6 +1,5 @@
 import { EditOutlined, PersonOutline } from "@mui/icons-material";
 import { useContext, useRef, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import "./updateprofile.css";
@@ -14,9 +13,6 @@ import Loading from "../../../components/loading/Loading";
 import Message from "../../../components/message/Message";
 
 const UpdateProfile = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-
     const { message, setMessage } = useContext(AuthContext);
 
     const userInfo = useUser();

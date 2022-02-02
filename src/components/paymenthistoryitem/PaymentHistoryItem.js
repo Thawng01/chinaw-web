@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./paymentHistoryItem.css";
 
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";

@@ -6,7 +6,7 @@ const initialValue = {
     filter_users: [],
 };
 
-export default (state = initialValue, { type, payload }) => {
+const User = (state = initialValue, { type, payload }) => {
     switch (type) {
         case FETCH_USER:
             return { ...state, user: payload };
@@ -21,3 +21,5 @@ export default (state = initialValue, { type, payload }) => {
             return state;
     }
 };
+
+export default User;

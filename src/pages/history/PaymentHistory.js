@@ -24,7 +24,7 @@ const PaymentHistory = () => {
         };
 
         getPointClaim();
-    }, [user]);
+    }, [user, dispatch]);
 
     return (
         <div className="wrapCustomArrowAndHistory">

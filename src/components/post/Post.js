@@ -26,11 +26,7 @@ const Post = ({ post, onComment, onDelete, onLike, onSave, uid, user }) => {
         <div className="postWrapperInFeed">
             <div className="postCards">
                 <div className="postCardTop">
-                    <img
-                        src={post.userImage}
-                        alt="User image"
-                        className="postCardUserImg"
-                    />
+                    <img src={post.userImage} className="postCardUserImg" />
 
                     <Link
                         className="postUsernameLink"

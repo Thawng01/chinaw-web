@@ -16,7 +16,7 @@ export const useUser = () => {
         };
 
         getUserInfo();
-    }, [user]);
+    }, [user, dispatch]);
 
     return userInfo;
 };

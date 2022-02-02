@@ -11,7 +11,7 @@ const initialValue = {
     error: null,
 };
 
-export default (state = initialValue, { type, payload }) => {
+const Post = (state = initialValue, { type, payload }) => {
     switch (type) {
         case FETCH_POSTS:
             return { ...state, posts: payload };
@@ -28,3 +28,5 @@ export default (state = initialValue, { type, payload }) => {
             return state;
     }
 };
+
+export default Post;

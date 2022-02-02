@@ -28,7 +28,7 @@ const ProfileScreen = () => {
         };
 
         getUserPosts();
-    }, [id]);
+    }, [id, dispatch, setMessage]);
 
     async function onChangeProfileBg(e) {
         if (e.target.files || e.target.files[0]) {

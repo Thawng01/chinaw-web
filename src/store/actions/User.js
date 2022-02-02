@@ -190,7 +190,7 @@ export const searchForUser = (value) => {
             return res;
         });
 
-        const filteredUser = map_users.filter((user) => user != undefined);
+        const filteredUser = map_users.filter((user) => user !== undefined);
 
         dispatch({ type: FILTERED_USER, payload: filteredUser });
     };

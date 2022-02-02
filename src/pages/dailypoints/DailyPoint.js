@@ -12,6 +12,7 @@ const DailyPoint = () => {
                 <a
                     href="https://play.google.com/store/apps/details?id=com.chinvoice"
                     target="_blank"
+                    rel="noreferrer"
                     className="appLink"
                 >
                     android

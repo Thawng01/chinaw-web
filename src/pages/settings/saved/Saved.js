@@ -7,11 +7,12 @@ import { fetchSavedPost } from "../../../store/actions/Post";
 import { AuthContext } from "../../../components/auth/AuthContext";
 import Feed from "../../../components/feed/Feed";
 import RightSide from "../../../components/sides/rightSide/RightSide";
+import Message from "../../../components/message/Message";
 
 const Saved = () => {
     const savedPosts = useSelector((state) => state.post.savedPosts);
 
-    const { user } = useContext(AuthContext);
+    const { user, setMessage, message } = useContext(AuthContext);
 
     const dispatch = useDispatch();
 
@@ -20,14 +21,15 @@ const Saved = () => {
             try {
                 await dispatch(fetchSavedPost(user));
             } catch (error) {
-                console.log(error.message);
+                setMessage(error.message);
             }
         };
         getSavedPosts();
-    }, []);
+    }, [dispatch, user, setMessage]);
 
     return (
         <div className="saved">
+            {message && <Message />}
             {savedPosts?.length === 0 ? (
                 <div className="noSavedPost">
                     <p>You have no saved post yet!</p>

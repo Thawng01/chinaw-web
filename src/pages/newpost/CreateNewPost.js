@@ -53,7 +53,7 @@ const CreateNewPost = () => {
         ref?.current?.focus();
 
         getPostToUpdate();
-    }, [id]);
+    }, [id, dispatch, setMessage]);
 
     const closeNewPostModal = (e) => {
         if (e.target.className === "newPostModal") {
@@ -86,7 +86,7 @@ const CreateNewPost = () => {
                 <div className="newPostModalUserInfos">
                     <img
                         src={userInfo?.image}
-                        alt="new post image"
+                        alt=""
                         className="newPostModalUserImg"
                     />
                     <span className="newPostModalUserName">{name}</span>
@@ -115,6 +115,7 @@ const CreateNewPost = () => {
                             <div className="selectedNewImageContainer">
                                 <img
                                     src={newImage.src}
+                                    alt=""
                                     className="selectedNewImage"
                                 />
                                 <div

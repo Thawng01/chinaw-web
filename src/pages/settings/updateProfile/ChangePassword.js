@@ -24,7 +24,7 @@ const ChangePassword = () => {
         if (!currentP || !password || !cPassword)
             return setMessage("Please fill the required field");
 
-        if (password != cPassword)
+        if (password !== cPassword)
             return setMessage("Passwords are not matching");
 
         setLoading(true);

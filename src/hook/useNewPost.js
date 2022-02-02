@@ -24,7 +24,7 @@ const useNewPost = (id, content, newImage, postToUpdate) => {
         }
 
         checkCanPost();
-    }, []);
+    }, [user, dispatch, setMessage]);
 
     const createNewPost = async () => {
         if (user === null) {

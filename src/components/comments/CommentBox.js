@@ -24,8 +24,8 @@ const CommentBox = ({ onComment, post }) => {
     const dispatch = useDispatch();
 
     const closeCommentBox = (e) => {
-        if (indexForDelete != null) {
-            if (e.target.className != "commentDeleteIconContainer") {
+        if (indexForDelete !== null) {
+            if (e.target.className !== "commentDeleteIconContainer") {
                 setIndexForDelete(null);
             }
         }
@@ -34,8 +34,6 @@ const CommentBox = ({ onComment, post }) => {
             onComment();
         }
     };
-
-    function closeCommentDeleteBox(e) {}
 
     useEffect(() => {
         const getComment = async () => {

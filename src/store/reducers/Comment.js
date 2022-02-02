@@ -4,7 +4,7 @@ const initialValue = {
     comments: [],
 };
 
-export default (state = initialValue, { type, payload }) => {
+const Comment = (state = initialValue, { type, payload }) => {
     switch (type) {
         case FETCH_COMMENTS:
             return { ...state, comments: payload };
@@ -13,3 +13,5 @@ export default (state = initialValue, { type, payload }) => {
             return state;
     }
 };
+
+export default Comment;

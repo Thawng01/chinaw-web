@@ -26,7 +26,7 @@ const Home = () => {
             }
         };
         getPosts();
-    }, []);
+    }, [dispatch, setMessage]);
 
     useEffect(() => {}, []);
 

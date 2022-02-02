@@ -1,12 +1,10 @@
-import "./settings.css";
+import { Route, Routes } from "react-router-dom";
 
-import Header from "../../components/header/Header";
-import LeftSide from "../../components/sides/leftSide/LeftSide";
+import "./settings.css";
 import SettingCardWrapper from "./SettingCardWrapper";
 import UpdateProfile from "../settings/updateProfile/UpdateProfile";
 import UpdateEmail from "../settings/updateProfile/UpdateEmail";
 import ChangePassword from "../settings/updateProfile/ChangePassword";
-import { Route, Routes } from "react-router-dom";
 import PaymentHistory from "../history/PaymentHistory";
 import NoPage from "../nopage/NoPage";
 import Saved from "./saved/Saved";

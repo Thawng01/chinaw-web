@@ -6,14 +6,15 @@ const SearchResult = ({ users, value, searchRef, toProfile }) => {
     const [currentIndex, setCurrentIndex] = useState(-1);
 
     useEffect(() => {
+        const myRef = searchRef.current;
         if (users && value) {
-            searchRef.current.addEventListener("keyup", onPressArrowKey);
+            myRef.addEventListener("keyup", onPressArrowKey);
         } else {
-            searchRef.current.removeEventListener("keyup", onPressArrowKey);
+            myRef.removeEventListener("keyup", onPressArrowKey);
         }
 
         return () => {
-            searchRef.current.removeEventListener("keyup", onPressArrowKey);
+            myRef.removeEventListener("keyup", onPressArrowKey);
         };
     }, [users, value]);
 
