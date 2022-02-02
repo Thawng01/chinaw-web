@@ -7,7 +7,7 @@ import {
     browserLocalPersistence,
 } from "firebase/auth";
 
-import { getDoc, getFirestore, setDoc, doc } from "firebase/firestore";
+import { getDoc, setDoc, doc } from "firebase/firestore";
 import { db } from "../../db/db";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -38,56 +38,84 @@ const Register = () => {
 
         setPersistence(auth, browserLocalPersistence).then(async () => {
             if (isRegister) {
-                const { user } = await createUserWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-                const fireStore = getFirestore();
-                const getUser = await getDoc(doc(fireStore, "Users", user.uid));
-                if (getUser.exists() === false) {
-                    try {
-                        await setDoc(doc(db, "Users", user.uid), {
-                            admin: false,
-                            bio: "",
-                            comments: [],
-                            email: user.email,
-                            image:
-                                user.photoURL === null
-                                    ? "https://img.favpng.com/6/14/2/account-icon-avatar-icon-man-icon-png-favpng-d9YxzGw3UPA07dE7sAQyMSiNk.jpg"
-                                    : user.photoURL,
-                            moderator: false,
-                            points: 0,
-                            post: [],
-                            postPowers: 3,
-                            powers: 10,
-                            uid: user.uid,
-                            restricted: false,
-                            username: user.displayName,
-                            isChance: true,
-                            likeTime: null,
-                            token: [],
-                            chanceTime: null,
-                            postTime: null,
-                            background: "",
-                        });
-                        setUser(user.uid);
-                        navigate(from, { replace: true });
-                    } catch (error) {
-                        console.log(error.message);
-                    }
+                try {
+                    const { user } = await createUserWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+                    checkIsUserInfo(user);
+                } catch (error) {
+                    validate(error);
                 }
             } else {
-                const { user } = await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-                setUser(user.uid);
-                navigate(from, { replace: true });
+                try {
+                    const { user } = await signInWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+                    setUser(user.uid);
+                    navigate(from, { replace: true });
+                } catch (error) {
+                    validate(error);
+                }
             }
         });
     };
+
+    function validate(error) {
+        if (error.code === "auth/network-request-failed") {
+            setError("No internet connection");
+        } else if (error.code === "auth/wrong-password") {
+            setError("Incorrect password");
+        } else if (error.code === "auth/user-not-found") {
+            setError("No user found with this email");
+        } else if (error.code === "auth/weak-password") {
+            setError("The password must be at least 6 character long");
+        } else if (error.code === "auth/invalid-email") {
+            setError("Invalid email");
+        } else if (error.code === "auth/email-already-in-use") {
+            setError("The email already  in use by another user");
+        } else if (error.code === "auth/too-many-requests") {
+            setError(
+                "Access to this account has been temporarily disabled due to many failed login attempts. You can try again later."
+            );
+        } else {
+            setError(error.message);
+        }
+    }
+
+    async function checkIsUserInfo(user) {
+        const getUser = await getDoc(doc(db, "Users", user.uid));
+        if (getUser.exists() === true) return;
+        await setDoc(doc(db, "Users", user.uid), {
+            admin: false,
+            bio: "",
+            comments: [],
+            email: user.email,
+            image:
+                user.photoURL === null
+                    ? "https://img.favpng.com/6/14/2/account-icon-avatar-icon-man-icon-png-favpng-d9YxzGw3UPA07dE7sAQyMSiNk.jpg"
+                    : user.photoURL,
+            moderator: false,
+            points: 0,
+            post: [],
+            postPowers: 3,
+            powers: 10,
+            uid: user.uid,
+            restricted: false,
+            username: user.displayName,
+            isChance: true,
+            likeTime: null,
+            token: [],
+            chanceTime: null,
+            postTime: null,
+            background: "",
+        });
+        setUser(user.uid);
+        navigate(from, { replace: true });
+    }
 
     return (
         <div className="register">

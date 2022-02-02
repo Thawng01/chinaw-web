@@ -8,6 +8,7 @@ const initialValue = {
     posts: [],
     post: {},
     savedPosts: [],
+    error: null,
 };
 
 export default (state = initialValue, { type, payload }) => {
@@ -20,6 +21,9 @@ export default (state = initialValue, { type, payload }) => {
 
         case FETCH_SAVED_POST:
             return { ...state, savedPosts: payload };
+
+        case "ERROR":
+            return { ...state, error: payload };
         default:
             return state;
     }

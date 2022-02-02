@@ -3,29 +3,46 @@ import { useParams, Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchUserPost } from "../../store/actions/User";
+import { fetchUserPost, updateProfileBg } from "../../store/actions/User";
 import RightSide from "../../components/sides/rightSide/RightSide";
 import ProfileHeader from "../../components/profileHeader/ProfileHeader";
 import Feed from "../../components/feed/Feed";
 import { AuthContext } from "../../components/auth/AuthContext";
+import Message from "../../components/message/Message";
 
 const ProfileScreen = () => {
     const { id } = useParams();
-    const { user } = useContext(AuthContext);
+
+    const { user, message, setMessage } = useContext(AuthContext);
 
     const userPosts = useSelector((state) => state.user.userPosts);
     const dispatch = useDispatch();
 
     useEffect(() => {
         const getUserPosts = async () => {
-            await dispatch(fetchUserPost(id));
+            try {
+                await dispatch(fetchUserPost(id));
+            } catch (error) {
+                setMessage(error.message);
+            }
         };
 
         getUserPosts();
     }, [id]);
 
+    async function onChangeProfileBg(e) {
+        if (e.target.files || e.target.files[0]) {
+            try {
+                await dispatch(updateProfileBg(e.target.files[0], user));
+            } catch (error) {
+                setMessage(error.message);
+            }
+        }
+    }
+
     return (
         <div className="profile">
+            {message && <Message />}
             <ProfileHeader
                 uid={id}
                 user={user}
@@ -36,6 +53,7 @@ const ProfileScreen = () => {
                 }
                 bio={userPosts?.bio}
                 post={userPosts?.post}
+                onChange={onChangeProfileBg}
             />
 
             {userPosts?.post?.length > 0 ? (

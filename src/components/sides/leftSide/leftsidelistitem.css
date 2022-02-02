@@ -3,9 +3,11 @@
     display: flex;
     align-items: center;
     padding: 15px;
-    border-radius: 6px;
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
     color: #000;
 }
+
 .leftItem {
     cursor: pointer;
 }

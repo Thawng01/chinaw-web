@@ -1,16 +1,37 @@
-import "./header.css";
-import { Search, Chat } from "@mui/icons-material";
-import { IoList, IoEnterOutline, IoExitOutline } from "react-icons/io5";
+import {
+    IoEnterOutline,
+    IoSearchOutline,
+    IoExitOutline,
+    IoNotificationsOutline,
+    IoListOutline,
+    IoCloseOutline,
+} from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../auth/AuthContext";
+import { useContext, useState, useRef } from "react";
 import { getAuth, signOut } from "firebase/auth";
 
+import "./header.css";
+import { AuthContext } from "../auth/AuthContext";
+import SearchResult from "../searchResult/SearchResult";
+import useSearch from "../../hook/useSearch";
+
 const Header = () => {
+    const [value, setValue] = useState("");
+    const [isFocused, setIsFocused] = useState(false);
+
     const { setIsMenuOpen, isMenuOpen, setUser, user } =
         useContext(AuthContext);
 
+    const { onSearch, users } = useSearch();
+
+    const searchRef = useRef();
+
     const navigate = useNavigate();
+
+    const searchUser = (e) => {
+        setValue(e.target.value);
+        onSearch(e);
+    };
 
     function logOut() {
         const auth = getAuth();
@@ -18,6 +39,11 @@ const Header = () => {
             setUser(null);
             navigate("/register");
         });
+    }
+
+    function toProfile(uid) {
+        setIsFocused(false);
+        navigate(`/profile/${uid}`);
     }
 
     return (
@@ -28,7 +54,7 @@ const Header = () => {
                         className="headerMenuContainer"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
-                        <IoList className="headerMenuIcon" />
+                        <IoListOutline className="headerMenuIcon" />
                     </div>
                     <Link
                         to="/"
@@ -40,20 +66,40 @@ const Header = () => {
                 </div>
 
                 <div className="headerCenter">
-                    <Search className="headerSearchIcon" />
+                    <IoSearchOutline className="headerSearchIcon" />
                     <input
+                        ref={searchRef}
                         type="text"
                         placeholder="Search"
-                        className="searchInput"
+                        className="headerSearchInput"
+                        value={value}
+                        onChange={searchUser}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={() => setIsFocused(false)}
                     />
+                    {value && (
+                        <IoCloseOutline
+                            className="searchCloseIcon"
+                            onClick={() => setValue("")}
+                        />
+                    )}
+
+                    {isFocused && (
+                        <SearchResult
+                            users={users}
+                            toProfile={toProfile}
+                            value={value}
+                            searchRef={searchRef}
+                        />
+                    )}
                 </div>
 
                 <div className="headerRight">
-                    <div className="searchContainer">
-                        <Search className="headerLeftSearchIcon" />
-                    </div>
+                    <Link to="/search" className="searchContainer">
+                        <IoSearchOutline className="headerLeftSearchIcon" />
+                    </Link>
                     <div className="notificationContainer">
-                        <Chat className="notiIcon" />
+                        <IoNotificationsOutline className="notiIcon" />
                         <span className="notification">1</span>
                     </div>
                     <div className="accounts" onClick={logOut}>

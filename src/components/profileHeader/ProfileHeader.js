@@ -1,6 +1,7 @@
-import "./profileheader.css";
-
 import { IoCameraOutline } from "react-icons/io5";
+import { useRef } from "react";
+
+import "./profileheader.css";
 
 const ProfileHeader = ({
     uid,
@@ -10,8 +11,15 @@ const ProfileHeader = ({
     username,
     bio,
     post,
+    onChange,
 }) => {
     let name = username?.split("@")[0];
+
+    const profileRef = useRef();
+
+    function changeProfileBackground() {
+        profileRef?.current?.click();
+    }
 
     return (
         <div className="profileContainer">
@@ -27,7 +35,16 @@ const ProfileHeader = ({
                 )}
 
                 {user === uid && (
-                    <div className="changeProfileCoverImg">
+                    <div
+                        className="changeProfileCoverImg"
+                        onClick={changeProfileBackground}
+                    >
+                        <input
+                            ref={profileRef}
+                            type="file"
+                            style={{ display: "none" }}
+                            onChange={onChange}
+                        />
                         <IoCameraOutline
                             style={{ fontSize: 25, color: "#fff" }}
                         />

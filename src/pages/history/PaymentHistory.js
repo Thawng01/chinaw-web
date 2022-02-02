@@ -2,51 +2,49 @@ import "./history.css";
 
 import PaymentHistoryItem from "../../components/paymenthistoryitem/PaymentHistoryItem";
 import CustomBack from "../../components/customBack/CustomBack";
-
-const history = [
-    {
-        id: 1,
-        name: "Chin Aw",
-        amount: 1000,
-        date: "3 days ago",
-        phone: "09772188985",
-        status: false,
-    },
-    {
-        id: 2,
-        name: "Salai Chin Aw",
-        amount: 1000,
-        date: "3 days ago",
-        phone: "09772188985",
-        status: true,
-    },
-    {
-        id: 3,
-        // name: "Chin Aw",
-        amount: 1000,
-        date: "3 days ago",
-        phone: "09772188985",
-        status: false,
-    },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPointClaim } from "../../store/actions/Point";
+import { AuthContext } from "../../components/auth/AuthContext";
+import { useContext, useEffect } from "react";
 
 const PaymentHistory = () => {
+    const points = useSelector((state) => state.point.points);
+
+    const { user } = useContext(AuthContext);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const getPointClaim = async () => {
+            try {
+                await dispatch(fetchPointClaim(user));
+            } catch (error) {
+                console.log(error.message);
+            }
+        };
+
+        getPointClaim();
+    }, [user]);
+
     return (
         <div className="wrapCustomArrowAndHistory">
-
             <div className="customArrowBackInPayment">
                 <CustomBack />
             </div>
-        <div className="paymentHistory">
-            {history.length === 0 && <h2>No history!</h2>}
+            <div className="paymentHistory">
+                {points.length === 0 && <h2>No history!</h2>}
 
-            {history.map((item, index) => {
-                return (
-                    <PaymentHistoryItem key={index} item={item} index={index} />
+                {points.map((item, index) => {
+                    return (
+                        <PaymentHistoryItem
+                            key={index}
+                            item={item}
+                            index={index}
+                        />
                     );
                 })}
+            </div>
         </div>
-                </div>
     );
 };
 

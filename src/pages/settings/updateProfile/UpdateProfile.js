@@ -9,7 +9,7 @@ import AppButton from "../../../components/Appbutton/AppButton";
 import { AuthContext } from "../../../components/auth/AuthContext";
 import ProfileFormInput from "../../../components/profileform/ProfileFormInput";
 import ProfilesFormWrapper from "../../../components/profileform/profilesformWrapper/ProfilesFormWrapper";
-import { updateProfile } from "../../../store/actions/User";
+import { updateUserProfile } from "../../../store/actions/User";
 import Loading from "../../../components/loading/Loading";
 import Message from "../../../components/message/Message";
 
@@ -23,18 +23,17 @@ const UpdateProfile = () => {
     const [userImage, setUserImage] = useState({ src: userInfo?.image });
     const [username, setUsername] = useState(userInfo?.username);
     const [bio, setBio] = useState(userInfo?.bio);
-    const [success, setSuccess] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const inputRef = useRef();
     const dispatch = useDispatch();
 
-    const updateUserProfile = async (e) => {
+    const updateProfile = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
             await dispatch(
-                updateProfile(username, userImage, bio, userInfo?.uid)
+                updateUserProfile(username, userImage, bio, userInfo?.uid)
             );
 
             setMessage("You have successfully updated your profile");
@@ -62,7 +61,7 @@ const UpdateProfile = () => {
         <>
             {message && <Message />}
             {loading && <Loading title="Updating..." />}
-            <ProfilesFormWrapper height={300} onSubmit={updateUserProfile}>
+            <ProfilesFormWrapper height={300} onSubmit={updateProfile}>
                 <img src={userImage?.src} alt="" className="profileUpdateImg" />
                 <input
                     type="file"

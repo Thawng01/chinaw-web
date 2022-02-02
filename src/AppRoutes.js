@@ -11,6 +11,7 @@ import Profile from "./pages/profile/Profile";
 import Register from "./pages/auth/Register";
 import Layout from "./pages/layout/Layout";
 import CreateNewPost from "./pages/newpost/CreateNewPost";
+import Search from "./pages/search/Search";
 
 const AppRoutes = () => {
     return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
                 <Route path="update_post/:id" element={<CreateNewPost />} />
                 <Route path="profile/:id" element={<Profile />} />
                 <Route path="points" element={<Points />} />
+                <Route path="search" element={<Search />} />
                 <Route path="dailypoints" element={<DailyPoint />} />
                 <Route path="settings/*" element={<Settings />} />
                 <Route path="fqas" element={<Faqs />} />

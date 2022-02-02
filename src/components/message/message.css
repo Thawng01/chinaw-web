@@ -8,8 +8,8 @@
 }
 
 .errorText {
-    background-color: antiquewhite;
-    color: red;
+    background-color: lightgray;
+    color: #000;
     padding: 10px;
     border-radius: 10px;
 }

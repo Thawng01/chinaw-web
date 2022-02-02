@@ -4,10 +4,11 @@ import {
     collection,
     query,
     where,
-    getDocs,
-    setDoc,
-    updateDoc,
     arrayUnion,
+    onSnapshot,
+    writeBatch,
+    arrayRemove,
+    updateDoc,
 } from "firebase/firestore";
 import uuid from "react-uuid";
 
@@ -17,21 +18,24 @@ export const FETCH_COMMENTS = "FETCH_COMMENTS";
 
 export const fetchComments = (id) => {
     return async (dispatch) => {
-        const result = await getDocs(
-            query(collection(db, "Comments"), where("postId", "==", id))
-        );
+        const q = query(collection(db, "Comments"), where("postId", "==", id));
 
-        const comment = result.docs.map((doc) => doc.data());
-
-        dispatch({ type: FETCH_COMMENTS, payload: comment });
+        onSnapshot(q, (querySnapshot) => {
+            const comments = [];
+            querySnapshot?.forEach((documentSnapshot) => {
+                comments.push(documentSnapshot.data());
+            });
+            dispatch({ type: FETCH_COMMENTS, payload: comments });
+        });
     };
 };
 
 export const createNewComment = (comment, postId, uid, userImage, username) => {
     return async (dispatch) => {
+        const batch = writeBatch(db);
         const id = uuid();
 
-        await setDoc(doc(db, "Comments", id), {
+        batch.set(doc(db, "Comments", id), {
             comment,
             commentedAt: new Date().getTime(),
             id,
@@ -42,12 +46,58 @@ export const createNewComment = (comment, postId, uid, userImage, username) => {
             username,
         });
 
-        await updateDoc(doc(db, "Users", uid), {
+        batch.update(doc(db, "Users", uid), {
             comments: arrayUnion(id),
         });
 
-        await updateDoc(doc(db, "Posts", postId), {
+        batch.update(doc(db, "Posts", postId), {
             comments: arrayUnion(id),
         });
+
+        await batch.commit();
+    };
+};
+
+export const likeComment = (cid, uid) => {
+    return async (dispatch) => {
+        const cdoc = doc(db, "Comments", cid);
+
+        const result = await getDoc(cdoc);
+
+        if (result.exists === false)
+            throw new Error("No comment found with the given id");
+
+        const likes = result.data().likes;
+
+        if (likes.includes(uid)) {
+            updateDoc(cdoc, {
+                likes: arrayRemove(uid),
+            });
+        } else {
+            updateDoc(cdoc, {
+                likes: arrayUnion(uid),
+            });
+        }
+    };
+};
+
+export const deleteComment = (cid, pid, uid) => {
+    return async (dispatch) => {
+        const batch = writeBatch(db);
+        const pdoc = doc(db, "Posts", pid);
+        const cdoc = doc(db, "Comments", cid);
+        const udoc = doc(db, "Users", uid);
+
+        batch.update(pdoc, {
+            comments: arrayRemove(cid),
+        });
+
+        batch.update(udoc, {
+            comments: arrayRemove(cid),
+        });
+
+        batch.delete(cdoc);
+
+        await batch.commit();
     };
 };

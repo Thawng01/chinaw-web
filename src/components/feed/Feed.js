@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { useDispatch } from "react-redux";
 
 import "./feed.css";
 import NewPost from "../newPost/NewPost";
@@ -7,35 +6,17 @@ import Post from "../post/Post";
 import CommentBox from "../comments/CommentBox";
 import Popup from "../popupcardmodal/Popup";
 import Message from "../message/Message";
-import { likePost, savePost } from "../../store/actions/Post";
 import { AuthContext } from "../auth/AuthContext";
+import usePostAction from "../../hook/usePostAction";
 
 const Feed = ({ posts, home, uid, user }) => {
     const [isComment, setIsComment] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
     const [post, setPost] = useState();
 
-    const { message, setMessage } = useContext(AuthContext);
+    const { message } = useContext(AuthContext);
 
-    const dispatch = useDispatch();
-
-    const onPostLike = async (pid, puid) => {
-        if (puid === user)
-            return setMessage("You are not allowed to like your own post");
-        try {
-            await dispatch(likePost(user, pid));
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
-
-    const onPostSave = async (pid) => {
-        try {
-            await dispatch(savePost(user, pid));
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    const { onPostLike, onPostSave } = usePostAction();
 
     const openCommentBox = (post) => {
         setPost(post);

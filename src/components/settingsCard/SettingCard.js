@@ -1,5 +1,5 @@
 import "./settingscard.css";
-import { Link, useLocation, useMatch, useResolvedPath } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SettingCard = ({ Icon, title, desc, path }) => {
     const { pathname } = useLocation();

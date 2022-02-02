@@ -4,7 +4,7 @@ import "./leftsidelistitem.css";
 
 const LeftSideListItem = ({ title, desc, onClick, Icon, to }) => {
     let activeBackgroundColor = {
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#fff",
     };
 
     return (

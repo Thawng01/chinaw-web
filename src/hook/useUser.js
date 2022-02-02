@@ -10,7 +10,12 @@ export const useUser = () => {
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        dispatch(fetchUser(user));
+        const getUserInfo = async () => {
+            if (user === null) return;
+            await dispatch(fetchUser(user));
+        };
+
+        getUserInfo();
     }, [user]);
 
     return userInfo;

@@ -1,16 +1,13 @@
 import {
-    getDocs,
     orderBy,
     onSnapshot,
     where,
     query,
     collection,
     doc,
-    setDoc,
     getDoc,
     getFirestore,
     updateDoc,
-    deleteDoc,
     arrayUnion,
     arrayRemove,
     writeBatch,
@@ -26,6 +23,7 @@ import {
 } from "firebase/storage";
 
 import uuid from "react-uuid";
+import moment from "moment";
 
 import { db } from "../../db/db";
 export const CREATE_POST = "CREATE_POST";
@@ -43,6 +41,8 @@ export const addNewPost = (content, image, uid, pid, imageToUpdate) => {
 
         const batch = writeBatch(db);
 
+        const userDocRef = doc(db, "Users", uid);
+
         const result = await getDoc(doc(db, "Users", uid));
         if (result.exists === false) {
             throw new Error("No post found with the given id!");
@@ -50,11 +50,21 @@ export const addNewPost = (content, image, uid, pid, imageToUpdate) => {
 
         const user = result.data();
 
+        const postT = user.postTime;
+        const postPower = user.postPowers;
+
+        if (!pid) {
+            if (postT && postPower === 0) {
+                const now = moment(new Date());
+                const diff = now.diff(postT, "minutes");
+                if (diff <= 2) {
+                    throw new Error("You can create only three posts per day");
+                }
+            }
+        }
+
         if (user.restricted === true)
             throw new Error("Your account has been restricted.");
-
-        if (user.postPowers === 0)
-            throw new Error("You can create only three posts per day.");
 
         const username = user.username;
         const email = user.email;
@@ -101,15 +111,18 @@ export const addNewPost = (content, image, uid, pid, imageToUpdate) => {
                 userImage,
                 username: username ? username : email,
             });
+
+            if (postPower === 1) {
+                batch.update(userDocRef, {
+                    postTime: new Date().getTime(),
+                });
+            }
+
+            batch.update(userDocRef, {
+                post: arrayUnion(id),
+                postPowers: postPower - 1,
+            });
         }
-
-        const postPower = user.postPowers;
-        const userDocRef = doc(db, "Users", uid);
-
-        batch.update(userDocRef, {
-            post: arrayUnion(id),
-            postPowers: postPower - 1,
-        });
 
         await batch.commit();
     };
@@ -118,12 +131,14 @@ export const addNewPost = (content, image, uid, pid, imageToUpdate) => {
 export const fetchPosts = () => {
     return async (dispatch) => {
         const q = query(collection(db, "Posts"), orderBy("createdAt", "desc"));
-        onSnapshot(q, (querySnapshot) => {
+        onSnapshot(q, onSuccess);
+
+        function onSuccess(querySnapshot) {
             const posts = [];
             querySnapshot?.forEach((snapshot) => posts.push(snapshot.data()));
 
             dispatch({ type: FETCH_POSTS, payload: posts });
-        });
+        }
     };
 };
 
@@ -209,44 +224,58 @@ export const likePost = (uid, pid) => {
         const post = await getDoc(postRef);
         if (post.exists === false) throw new Error("No post with the given id");
 
-        const isLiked = post.data().likes;
+        const postRes = post.data();
+        const isLiked = postRes.likes;
+        const puid = postRes.uid;
 
         if (isLiked?.includes(uid) === false) {
             // check if a user has power to like post or not
             const result = await getDoc(docRef);
             if (result.exists === false)
                 throw new Error("No user with the given id");
-            const power = result.data().powers;
-            if (power === 0) throw new Error("You have no power to like post");
 
+            const user = result.data();
+            const power = user.powers;
+            const likeT = user.likeTime;
+
+            if (likeT && power === 0) {
+                const now = moment(new Date());
+                const diff = now.diff(likeT, "minutes");
+                if (diff < 2) throw new Error("You have no power to like post");
+            }
+
+            batch.update(postRef, {
+                likes: arrayUnion(uid),
+            });
             // decrease power by 1
             batch.update(docRef, {
                 powers: power - 1,
             });
-        }
 
-        // update like array
-        if (isLiked?.includes(uid)) {
-            batch.update(postRef, {
-                likes: arrayRemove(uid),
-            });
+            if (power === 1) {
+                batch.update(docRef, {
+                    likeTime: new Date().getTime(),
+                });
+            }
         } else {
             batch.update(postRef, {
-                likes: arrayUnion(uid),
+                likes: arrayRemove(uid),
             });
         }
 
         // increase point
+
         await runTransaction(db, async (transaction) => {
-            const uDoc = await transaction.get(docRef);
+            const puRef = doc(db, "Users", puid);
+            const uDoc = await transaction.get(puRef);
 
             if (isLiked?.includes(uid)) {
                 const newPoint = uDoc.data().points - 10;
-                transaction.update(docRef, { points: newPoint });
+                transaction.update(puRef, { points: newPoint });
             } else {
                 const point = uDoc.data().points;
                 const newPoint = point + 10;
-                transaction.update(docRef, { points: newPoint });
+                transaction.update(puRef, { points: newPoint });
             }
         });
 
@@ -291,5 +320,45 @@ export const fetchSavedPost = (uid) => {
 
             dispatch({ type: FETCH_SAVED_POST, payload: savedPosts });
         });
+    };
+};
+
+export const canPost = (uid) => {
+    return async (dispatch) => {
+        const docRef = doc(db, "Users", uid);
+        const result = await getDoc(docRef);
+        const user = result.data();
+
+        const pTime = user.postTime;
+        if (pTime === null) return;
+
+        const now = moment(new Date());
+        const diff = now.diff(pTime, "minutes");
+        if (diff >= 2) {
+            await updateDoc(docRef, {
+                postPowers: 3,
+                postTime: null,
+            });
+        }
+    };
+};
+
+export const canLike = (uid) => {
+    return async (dispatch) => {
+        const docRef = doc(db, "Users", uid);
+        const result = await getDoc(docRef);
+        const user = result.data();
+
+        const lTime = user.likeTime;
+        if (lTime === null) return;
+
+        const now = moment(new Date());
+        const diff = now.diff(lTime, "minutes");
+        if (diff >= 2) {
+            await updateDoc(docRef, {
+                powers: 10,
+                likeTime: null,
+            });
+        }
     };
 };

@@ -1,15 +1,21 @@
 import { Photo, Send, ThumbUp } from "@mui/icons-material";
 import { useEffect, useState, useRef } from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoCloseCircleOutline, IoEllipsisVertical } from "react-icons/io5";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./commentBox.css";
-import { fetchComments, createNewComment } from "../../store/actions/Comment";
+import {
+    fetchComments,
+    createNewComment,
+    deleteComment,
+    likeComment,
+} from "../../store/actions/Comment";
 import { useUser } from "../../hook/useUser";
 
 const CommentBox = ({ onComment, post }) => {
     const [newComment, setNewComment] = useState("");
+    const [indexForDelete, setIndexForDelete] = useState(null);
     const ref = useRef();
     const userInfo = useUser();
 
@@ -18,10 +24,18 @@ const CommentBox = ({ onComment, post }) => {
     const dispatch = useDispatch();
 
     const closeCommentBox = (e) => {
+        if (indexForDelete != null) {
+            if (e.target.className != "commentDeleteIconContainer") {
+                setIndexForDelete(null);
+            }
+        }
+
         if (e.target.className === "commentBox") {
             onComment();
         }
     };
+
+    function closeCommentDeleteBox(e) {}
 
     useEffect(() => {
         const getComment = async () => {
@@ -37,6 +51,7 @@ const CommentBox = ({ onComment, post }) => {
     }, []);
 
     const createComment = async () => {
+        setNewComment("");
         try {
             await dispatch(
                 createNewComment(
@@ -47,6 +62,23 @@ const CommentBox = ({ onComment, post }) => {
                     userInfo?.username
                 )
             );
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    const onDeleteComment = async (cid, uid) => {
+        setIndexForDelete(null);
+        try {
+            await dispatch(deleteComment(cid, post?.id, uid));
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    const onLikeComment = async (cid) => {
+        try {
+            await dispatch(likeComment(cid, userInfo?.uid));
         } catch (error) {
             console.log(error.message);
         }
@@ -95,7 +127,17 @@ const CommentBox = ({ onComment, post }) => {
                                             ).fromNow()}
                                         </span>
                                         <ThumbUp
+                                            onClick={() =>
+                                                onLikeComment(comment.id)
+                                            }
                                             sx={{ fontSize: 18 }}
+                                            style={{
+                                                color: comment?.likes?.includes(
+                                                    userInfo?.uid
+                                                )
+                                                    ? "#ff1a8c"
+                                                    : "gray",
+                                            }}
                                             className="commentLikeAction"
                                         />
                                         {comment?.likes?.length > 0 && (
@@ -112,6 +154,41 @@ const CommentBox = ({ onComment, post }) => {
                                         )}
                                     </div>
                                 </div>
+                                {userInfo?.uid === comment.uid && (
+                                    <div className="moreHor">
+                                        <div
+                                            className="commentDeleteIconContainer"
+                                            onClick={() =>
+                                                setIndexForDelete(
+                                                    index === indexForDelete
+                                                        ? null
+                                                        : index
+                                                )
+                                            }
+                                        >
+                                            <IoEllipsisVertical />
+                                        </div>
+
+                                        {indexForDelete === index && (
+                                            <div className="commentDeleteBox">
+                                                <p
+                                                    className="commentDelete"
+                                                    onClick={() =>
+                                                        onDeleteComment(
+                                                            comment.id,
+                                                            comment.uid
+                                                        )
+                                                    }
+                                                >
+                                                    Delete
+                                                </p>
+                                                <p className="commentEdit">
+                                                    Edit
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         );
                     })}
@@ -126,6 +203,7 @@ const CommentBox = ({ onComment, post }) => {
                             type="text"
                             placeholder="Type a comment"
                             className="commentInput"
+                            value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
                         />
                     </div>

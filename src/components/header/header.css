@@ -1,5 +1,11 @@
 .header {
-    background-color: var(--primary);
+    background-image: linear-gradient(
+        to right,
+        #b30059,
+        #e60073,
+        #ff0080,
+        #ff4da6
+    );
     display: flex;
     height: 60px;
     top: 0;
@@ -65,19 +71,22 @@
     width: 35%;
     height: 35px;
     border-radius: 5px;
+    position: relative;
 }
 
 .headerSearchIcon {
     margin: 0 10px;
+    font-size: 25px;
+    color: gray;
 }
 
-.searchInput {
+.headerSearchInput {
     border: none;
     width: 80%;
     font-size: 17px;
 }
 
-.searchInput:focus {
+.headerSearchInput:focus {
     outline: none;
 }
 
@@ -87,6 +96,12 @@
     display: flex;
     align-items: center;
     display: none;
+}
+
+.searchCloseIcon {
+    color: #000;
+    cursor: pointer;
+    font-size: 20px;
 }
 
 .headerLeftSearchIcon {
@@ -109,6 +124,7 @@
 
 .notiIcon {
     color: #fff;
+    font-size: 25px;
 }
 
 .notification {
@@ -141,20 +157,16 @@
 }
 
 /* for small device */
+@media screen and (max-width: 700px) {
+    .headerMenuContainer {
+        display: block;
+    }
 
-@media screen and (max-width: 750px) {
     .searchContainer {
         display: block;
     }
 
     .headerCenter {
         display: none;
-    }
-}
-
-/* for small device */
-@media screen and (max-width: 700px) {
-    .headerMenuContainer {
-        display: block;
     }
 }

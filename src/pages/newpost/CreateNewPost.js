@@ -3,31 +3,37 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useContext, useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./createNewPost.css";
 import { AuthContext } from "../../components/auth/AuthContext";
-import { addNewPost, fetchSinglePost } from "../../store/actions/Post";
+import { fetchSinglePost } from "../../store/actions/Post";
 import { useUser } from "../../hook/useUser";
+import useNewPost from "../../hook/useNewPost";
 import Loading from "../../components/loading/Loading";
 import Message from "../../components/message/Message";
 
 const CreateNewPost = () => {
     const { id } = useParams();
     const postToUpdate = useSelector((state) => state.post.post);
-
     const [content, setContent] = useState(id ? postToUpdate?.content : "");
     const [newImage, setNewImage] = useState({
         src: id ? postToUpdate?.image : null,
     });
-    const [loading, setLoading] = useState(false);
+
+    const { loading, createNewPost } = useNewPost(
+        id,
+        content,
+        newImage,
+        postToUpdate
+    );
     const userInfo = useUser();
 
     let name = userInfo?.username ? userInfo?.username : userInfo?.email;
     name = name?.split("@")[0];
 
-    const { user, message, setMessage } = useContext(AuthContext);
-    const location = useLocation();
+    const { message, setMessage } = useContext(AuthContext);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const fileInputRef = useRef();
@@ -36,44 +42,18 @@ const CreateNewPost = () => {
     useEffect(() => {
         const getPostToUpdate = async () => {
             if (!id) return;
-            setLoading(true);
+
             try {
                 await dispatch(fetchSinglePost(id));
             } catch (error) {
                 setMessage(error.message);
             }
-            setLoading(false);
         };
 
         ref?.current?.focus();
 
         getPostToUpdate();
     }, [id]);
-
-    const createNewPost = async () => {
-        if (user === null) {
-            navigate("/register", { state: location });
-            return;
-        }
-
-        setLoading(true);
-
-        try {
-            if (id) {
-                let imageToUpdate = postToUpdate?.image;
-                await dispatch(
-                    addNewPost(content, newImage, user, id, imageToUpdate)
-                );
-            } else {
-                await dispatch(addNewPost(content, newImage, user));
-            }
-            navigate(-1);
-        } catch (error) {
-            setMessage(error.message);
-        }
-
-        setLoading(false);
-    };
 
     const closeNewPostModal = (e) => {
         if (e.target.className === "newPostModal") {

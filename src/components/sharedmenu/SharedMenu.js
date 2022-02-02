@@ -14,7 +14,7 @@ import { AuthContext } from "../auth/AuthContext";
 import LeftSideListItem from "../sides/leftSide/LeftSideListItem";
 
 const SharedMenu = ({ userInfo }) => {
-    const { setIsMenuOpen } = useContext(AuthContext);
+    const { setIsMenuOpen, user } = useContext(AuthContext);
 
     const closeMenu = () => {
         setIsMenuOpen(false);
@@ -26,7 +26,19 @@ const SharedMenu = ({ userInfo }) => {
     return (
         <div className="leftWrapper">
             <div className="leftProfileContainer">
-                <img src={userInfo?.image} alt="" className="leftProfileImg" />
+                {user ? (
+                    <img
+                        src={userInfo?.image}
+                        alt=""
+                        className="leftProfileImg"
+                    />
+                ) : (
+                    <img
+                        src="/assets/placeholder.png"
+                        alt=""
+                        className="leftProfileImg"
+                    />
+                )}
                 <div className="leftProfileInfos">
                     <p className="leftProfileUsername">{name}</p>
                     <span>
@@ -52,63 +64,65 @@ const SharedMenu = ({ userInfo }) => {
 
             <div className="leftLine" />
 
-            <ul className="leftItems">
-                <LeftSideListItem
-                    title="Home"
-                    desc="View home"
-                    Icon={HomeOutlined}
-                    to="/"
-                    onClick={closeMenu}
-                />
+            {user && (
+                <ul className="leftItems">
+                    <LeftSideListItem
+                        title="Home"
+                        desc="View home"
+                        Icon={HomeOutlined}
+                        to="/"
+                        onClick={closeMenu}
+                    />
 
-                <LeftSideListItem
-                    title="Your post"
-                    desc="View your own post"
-                    Icon={PostAddRounded}
-                    to={`/profile/${userInfo?.uid}`}
-                    onClick={closeMenu}
-                />
+                    <LeftSideListItem
+                        title="Your post"
+                        desc="View your own post"
+                        Icon={PostAddRounded}
+                        to={`/profile/${userInfo?.uid}`}
+                        onClick={closeMenu}
+                    />
 
-                <LeftSideListItem
-                    title="Your points"
-                    desc="View your points"
-                    Icon={Money}
-                    to="/points"
-                    onClick={closeMenu}
-                />
+                    <LeftSideListItem
+                        title="Your points"
+                        desc="View your points"
+                        Icon={Money}
+                        to="/points"
+                        onClick={closeMenu}
+                    />
 
-                <LeftSideListItem
-                    title="Daily points"
-                    desc="Claim your daily points"
-                    to="/dailypoints"
-                    Icon={CardGiftcardOutlined}
-                    onClick={closeMenu}
-                />
+                    <LeftSideListItem
+                        title="Daily points"
+                        desc="Claim your daily points"
+                        to="/dailypoints"
+                        Icon={CardGiftcardOutlined}
+                        onClick={closeMenu}
+                    />
 
-                <LeftSideListItem
-                    title="Setting"
-                    desc="View your info"
-                    to="/settings"
-                    Icon={SettingsOutlined}
-                    onClick={closeMenu}
-                />
+                    <LeftSideListItem
+                        title="Setting"
+                        desc="View your info"
+                        to="/settings"
+                        Icon={SettingsOutlined}
+                        onClick={closeMenu}
+                    />
 
-                <LeftSideListItem
-                    title="FAQs"
-                    desc="Read FQAs"
-                    to="/fqas"
-                    Icon={QuestionMarkRounded}
-                    onClick={closeMenu}
-                />
+                    <LeftSideListItem
+                        title="FAQs"
+                        desc="Read FQAs"
+                        to="/fqas"
+                        Icon={QuestionMarkRounded}
+                        onClick={closeMenu}
+                    />
 
-                <LeftSideListItem
-                    title="Contacts"
-                    desc="Contact admin"
-                    to="/contact"
-                    Icon={ContactMail}
-                    onClick={closeMenu}
-                />
-            </ul>
+                    <LeftSideListItem
+                        title="Contacts"
+                        desc="Contact admin"
+                        to="/contact"
+                        Icon={ContactMail}
+                        onClick={closeMenu}
+                    />
+                </ul>
+            )}
         </div>
     );
 };
