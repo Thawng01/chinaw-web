@@ -46,7 +46,7 @@ const CommentBox = ({ onComment, post }) => {
 
         ref?.current?.focus();
         getComment();
-    }, []);
+    }, [dispatch, post?.id]);
 
     const createComment = async () => {
         setNewComment("");
@@ -90,11 +90,7 @@ const CommentBox = ({ onComment, post }) => {
             />
             <div className="commentBoxContainer">
                 <div className="commentBoxHeaderContainer">
-                    <img
-                        src={post?.userImage}
-                        alt=""
-                        className="postImgInComment"
-                    />
+                    <img src={post?.userImage} className="postImgInComment" />
                     <span className="postUsernameInComment">
                         {`${post?.username}'s post`}
                     </span>
@@ -106,7 +102,6 @@ const CommentBox = ({ onComment, post }) => {
                             <div key={index} className="commentorsContainer">
                                 <img
                                     src={comment.userImage}
-                                    alt=""
                                     className="commentorImg"
                                 />
                                 <div className="commentorInfos">

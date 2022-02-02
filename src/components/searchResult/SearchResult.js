@@ -16,7 +16,7 @@ const SearchResult = ({ users, value, searchRef, toProfile }) => {
         return () => {
             myRef.removeEventListener("keyup", onPressArrowKey);
         };
-    }, [users, value]);
+    }, [users, value, searchRef, onPressArrowKey]);
 
     let activeIndex = -1;
     function onPressArrowKey(e) {

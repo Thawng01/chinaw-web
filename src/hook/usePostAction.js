@@ -36,7 +36,7 @@ const usePostAction = () => {
         };
 
         checkCanLike();
-    }, [user]);
+    }, [user, setMessage, dispatch]);
 
     return { onPostLike, onPostSave };
 };
