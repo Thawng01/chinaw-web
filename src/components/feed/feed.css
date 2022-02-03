@@ -1,4 +1,10 @@
 .feed {
     flex: 4;
-    margin: 0 15px;
+    margin: 0;
+}
+
+@media screen and (min-width: 400px) {
+    .feed {
+        margin: 0 15px;
+    }
 }

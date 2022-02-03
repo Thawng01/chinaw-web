@@ -12,6 +12,7 @@
     padding: 10px;
     width: 100%;
     border: none;
+    font-size: 18px;
 }
 
 .profileUpdateInput:focus {
@@ -26,6 +27,7 @@
     border: none;
     border-radius: 7px;
     cursor: pointer;
+    font-size: 18px;
 }
 
 @media screen and (max-width: 650px) {

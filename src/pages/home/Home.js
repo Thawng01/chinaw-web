@@ -32,7 +32,6 @@ const Home = () => {
 
     return (
         <>
-            {isOnline ? "Online" : "Offline"}
             {message && <Message />}
             <Feed posts={posts} home user={user} />
             <RightSide />

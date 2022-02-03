@@ -39,14 +39,14 @@ const Post = ({ post, onComment, onDelete, onLike, onSave, uid, user }) => {
                     </span>
                 </div>
                 <div className="postCardCenter">
-                    <p className="postDesc">
+                    <div className="postDesc">
                         {readMore ? post?.content.slice(0, 240) : post?.content}
                         {post?.content?.length > 240 && (
                             <span className="readMore" onClick={toggleReadMore}>
                                 {readMore ? " ... read more" : " show less"}
                             </span>
                         )}
-                    </p>
+                    </div>
                     <img src={post?.image} alt="" className="postCardImg" />
                 </div>
                 <div className="postLine" />

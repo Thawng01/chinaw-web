@@ -6,7 +6,7 @@
     background-color: white;
     padding: 10px;
     margin: 15px 0;
-    border-radius: 10px;
+    border-radius: 0px;
     -webkit-box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.1);
 }
@@ -32,4 +32,10 @@
 .placeholder {
     padding: 0 10px;
     color: gray;
+}
+
+@media screen and (min-width: 400px) {
+    .newPost {
+        border-radius: 10px;
+    }
 }
