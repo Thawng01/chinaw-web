@@ -1,4 +1,4 @@
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { AuthContext } from "./components/auth/AuthContext";
 import { useEffect, useState } from "react";
