@@ -6,6 +6,15 @@
     border-radius: 7px;
     color: #fff;
     cursor: pointer;
+    font-size: 18px;
+}
+
+.appButton.active {
+    opacity: 0.6;
+}
+
+.appButton.focus {
+    outline: none;
 }
 
 @media screen and (max-width: 650px) {

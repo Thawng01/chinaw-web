@@ -12,25 +12,29 @@ import Register from "./pages/auth/Register";
 import Layout from "./pages/layout/Layout";
 import CreateNewPost from "./pages/newpost/CreateNewPost";
 import Search from "./pages/search/Search";
+import Header from "./components/header/Header";
 
 const AppRoutes = () => {
     return (
-        <Routes>
-            <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
+        <>
+            <Header />
+            <Routes>
                 <Route path="register" element={<Register />} />
-                <Route path="create_new_post" element={<CreateNewPost />} />
-                <Route path="update_post/:id" element={<CreateNewPost />} />
-                <Route path="profile/:id" element={<Profile />} />
-                <Route path="points" element={<Points />} />
-                <Route path="search" element={<Search />} />
-                <Route path="dailypoints" element={<DailyPoint />} />
-                <Route path="settings/*" element={<Settings />} />
-                <Route path="fqas" element={<Faqs />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="*" element={<NoPage />} />
-            </Route>
-        </Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="create_new_post" element={<CreateNewPost />} />
+                    <Route path="update_post/:id" element={<CreateNewPost />} />
+                    <Route path="profile/:id" element={<Profile />} />
+                    <Route path="points" element={<Points />} />
+                    <Route path="search" element={<Search />} />
+                    <Route path="dailypoints" element={<DailyPoint />} />
+                    <Route path="settings/*" element={<Settings />} />
+                    <Route path="fqas" element={<Faqs />} />
+                    <Route path="contact" element={<Contact />} />
+                    <Route path="*" element={<NoPage />} />
+                </Route>
+            </Routes>
+        </>
     );
 };
 

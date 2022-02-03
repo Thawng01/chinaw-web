@@ -7,15 +7,12 @@ import Feed from "../../components/feed/Feed";
 import { AuthContext } from "../../components/auth/AuthContext";
 import Message from "../../components/message/Message";
 import RightSide from "../../components/sides/rightSide/RightSide";
-import useOnline from "../../hook/useOnline";
 
 const Home = () => {
     const posts = useSelector((state) => state.post.posts);
     const { user, setMessage, message } = useContext(AuthContext);
 
     const dispatch = useDispatch();
-
-    const isOnline = useOnline();
 
     useEffect(() => {
         const getPosts = async () => {

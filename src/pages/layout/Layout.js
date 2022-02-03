@@ -7,16 +7,13 @@ import Menu from "../../components/menu/Menu";
 
 const Layout = () => {
     return (
-        <>
-            <Header />
-            <div className="layout">
-                <LeftSide />
-                <Menu />
-                <div className="layoutContainer">
-                    <Outlet />
-                </div>
+        <div className="layout">
+            <LeftSide />
+            <Menu />
+            <div className="layoutContainer">
+                <Outlet />
             </div>
-        </>
+        </div>
     );
 };
 

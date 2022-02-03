@@ -56,6 +56,11 @@
     margin-left: 10px;
 }
 
+.paymentTopUp:focus,
+.paymentKpay:focus {
+    outline: none;
+}
+
 .paymentsContainer {
     display: flex;
     flex: 1;
@@ -92,6 +97,7 @@
 .paymentInput:focus {
     outline-color: #ff1a8c;
     border-width: 1px;
+    border-radius: 6px;
 }
 
 .paymentSubmitBtn {
@@ -103,6 +109,14 @@
     border-radius: 6px;
     cursor: pointer;
     margin-top: 7px;
+}
+
+.paymentSubmitBtn:active {
+    opacity: 0.7;
+}
+
+.paymentSubmitBtn:focus {
+    outline: none;
 }
 
 @media screen and (max-width: 850px) {

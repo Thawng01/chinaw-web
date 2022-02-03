@@ -16,7 +16,7 @@ const Feed = ({ posts, home, uid, user }) => {
 
     const { message } = useContext(AuthContext);
 
-    const { onPostLike, onPostSave } = usePostAction();
+    const { onPostSave } = usePostAction();
 
     const openCommentBox = (post) => {
         setPost(post);
@@ -45,7 +45,7 @@ const Feed = ({ posts, home, uid, user }) => {
                     <Post
                         onComment={() => openCommentBox(post)}
                         onDelete={() => onDeletePost(post)}
-                        onLike={() => onPostLike(post?.id, post?.uid)}
+                        // onLike={() => onPostLike(post?.id, post?.uid)}
                         onSave={() => onPostSave(post?.id)}
                         key={index}
                         post={post}

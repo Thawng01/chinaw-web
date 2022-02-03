@@ -23,6 +23,7 @@
     margin-bottom: 20px;
     border-radius: 5px;
     border: 1px solid grey;
+    font-size: 17px;
 }
 
 .contactInput:focus {
@@ -37,11 +38,13 @@
     padding: 10px;
     margin-bottom: 15px;
     resize: none;
+    font-size: 18px;
 }
 
 .contactMessage:focus {
     outline-color: #ff1a8c;
     border-width: 1px;
+    border-radius: 5px;
 }
 
 .contactBtn {
@@ -71,6 +74,9 @@
 }
 
 @media screen and (max-width: 500px) {
+    .contactBox {
+        width: 95%;
+    }
     .contactInput,
     .contactMessage,
     .contactBtn {

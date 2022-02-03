@@ -13,11 +13,32 @@ import {
 } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 
-const Post = ({ post, onComment, onDelete, onLike, onSave, uid, user }) => {
+import usePostAction from "../../hook/usePostAction";
+
+const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
     const [readMore, setReadMore] = useState(true);
+    const [isLiked, setIsLiked] = useState(
+        post?.likes?.includes(user) ? true : false
+    );
+
+    const [likeNum, setLikeNum] = useState(post?.likes?.length);
+
+    const { onPostLike } = usePostAction();
 
     const toggleReadMore = () => {
         setReadMore(!readMore);
+    };
+
+    const onLike = async () => {
+        if (isLiked) {
+            setLikeNum(likeNum - 1);
+            setIsLiked(false);
+            await onPostLike(post?.id, post?.uid);
+        } else {
+            setIsLiked(true);
+            setLikeNum(likeNum + 1);
+            await onPostLike(post?.id, post?.uid);
+        }
     };
 
     let username = post?.username.split("@")[0];
@@ -61,7 +82,7 @@ const Post = ({ post, onComment, onDelete, onLike, onSave, uid, user }) => {
                     ) : (
                         <div className="likeContainer">
                             <div className="likeIconContainer" onClick={onLike}>
-                                {post?.likes?.includes(user) ? (
+                                {isLiked ? (
                                     <IoHeart
                                         style={{ color: "red" }}
                                         className="postIcon"
@@ -70,15 +91,11 @@ const Post = ({ post, onComment, onDelete, onLike, onSave, uid, user }) => {
                                     <IoHeartOutline className="postIcon" />
                                 )}
                             </div>
-                            {post?.likes?.length > 0 && (
+                            {likeNum > 0 && (
                                 <>
-                                    <span className="likeCount">
-                                        {post?.likes?.length}
-                                    </span>
+                                    <span className="likeCount">{likeNum}</span>
                                     <span className="likeCountLabel">
-                                        {post?.likes?.length > 1
-                                            ? " Likes"
-                                            : " Like"}
+                                        {likeNum > 1 ? " Likes" : " Like"}
                                     </span>
                                 </>
                             )}

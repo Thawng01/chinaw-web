@@ -239,9 +239,9 @@ export const likePost = (uid, pid) => {
             const likeT = user.likeTime;
 
             if (likeT && power === 0) {
-                const now = moment(new Date());
-                const diff = now.diff(likeT, "minutes");
-                if (diff < 2) throw new Error("You have no power to like post");
+                // const now = moment(new Date());
+                // const diff = now.diff(likeT, "minutes");
+                throw new Error("You have no power to like post");
             }
 
             batch.update(postRef, {
