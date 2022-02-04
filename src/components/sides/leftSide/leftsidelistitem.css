@@ -12,10 +12,10 @@
     cursor: pointer;
 }
 
-.leftItem:active {
+/* .leftItem:active {
     background-color: #f0f0f0;
     border-radius: 5px;
-}
+} */
 
 .leftIcon {
     margin-right: 20px;
@@ -25,10 +25,8 @@
 .leftItemText {
     font-size: 18px;
     font-weight: 500;
-    color: #000;
 }
 
 .leftItemDesc {
-    color: grey;
     font-size: 14px;
 }

@@ -14,7 +14,7 @@ const Feed = ({ posts, home, uid, user }) => {
     const [isDelete, setIsDelete] = useState(false);
     const [post, setPost] = useState();
 
-    const { message } = useContext(AuthContext);
+    const { message, dark } = useContext(AuthContext);
 
     const { onPostSave } = usePostAction();
 
@@ -38,14 +38,16 @@ const Feed = ({ posts, home, uid, user }) => {
                 <Popup post={post} onClose={() => setIsDelete(false)} />
             )}
 
-            <div className="feed">
+            <div
+                style={{ backgroundColor: dark ? "#000" : "#fff" }}
+                className="feed"
+            >
                 {message && <Message />}
                 {home && <NewPost />}
                 {posts?.map((post, index) => (
                     <Post
                         onComment={() => openCommentBox(post)}
                         onDelete={() => onDeletePost(post)}
-                        // onLike={() => onPostLike(post?.id, post?.uid)}
                         onSave={() => onPostSave(post?.id)}
                         key={index}
                         post={post}

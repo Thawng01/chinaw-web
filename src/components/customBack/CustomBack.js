@@ -7,11 +7,10 @@ const CustomBack = () => {
     const navigate = useNavigate();
     return (
         <div className="customArrowBackContainer">
-
-        <div className="customArrowBack" onClick={() => navigate(-1)}>
-            <MdArrowBack className="customArrowBackIcon" />
-        </div>
-            <span className="customArrowBackLabel">Go back</span>
+            <div className="customArrowBack" onClick={() => navigate(-1)}>
+                <MdArrowBack className="customArrowBackIcon" />
+            </div>
+            <span>Go back</span>
         </div>
     );
 };

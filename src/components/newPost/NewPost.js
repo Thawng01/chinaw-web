@@ -6,9 +6,12 @@ import { AuthContext } from "../auth/AuthContext";
 
 const NewPost = () => {
     const userInfo = useUser();
-    const { user } = useContext(AuthContext);
+    const { user, dark } = useContext(AuthContext);
     return (
-        <div className="newPost">
+        <div
+            style={{ backgroundColor: dark ? "#333" : "white" }}
+            className="newPost"
+        >
             {user ? (
                 <img src={userInfo?.image} alt="" className="newPostImg" />
             ) : (
@@ -18,8 +21,17 @@ const NewPost = () => {
                     className="newPostImg"
                 />
             )}
-            <Link to="/create_new_post" className="newPostBtn">
-                <span className="placeholder">What's in your mind?</span>
+            <Link
+                to="/create_new_post"
+                style={{ backgroundColor: dark ? "#4d4d4d" : "#f1f1f1" }}
+                className="newPostBtn"
+            >
+                <span
+                    style={{ color: dark ? "#ccc" : "gray" }}
+                    className="placeholder"
+                >
+                    What's in your mind?
+                </span>
             </Link>
         </div>
     );

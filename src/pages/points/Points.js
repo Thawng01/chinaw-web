@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import "./points.css";
 import { addNewClaimPoint } from "../../store/actions/Point";
 import Message from "../../components/message/Message";
-import { AuthContext } from "../../components/auth/AuthContext";
+import useAuthContext from "../../hook/useAuthContext";
 import Loading from "../../components/loading/Loading";
 
 import { useUser } from "../../hook/useUser";
@@ -18,7 +18,7 @@ const Points = () => {
 
     const userInfor = useUser();
 
-    const { message, setMessage } = useContext(AuthContext);
+    const { message, setMessage, dark } = useAuthContext();
 
     const dispatch = useDispatch();
     const claimPoint = async (e) => {
@@ -73,7 +73,9 @@ const Points = () => {
                             <button
                                 style={{
                                     backgroundColor: kpay
-                                        ? "lightgrey"
+                                        ? dark
+                                            ? "#333"
+                                            : "lightgray"
                                         : "#ff1a8c",
                                 }}
                                 onClick={() => setKpay(false)}
@@ -85,6 +87,8 @@ const Points = () => {
                                 style={{
                                     backgroundColor: kpay
                                         ? "#ff1a8c"
+                                        : dark
+                                        ? "#333"
                                         : "lightgrey",
                                 }}
                                 onClick={() => setKpay(true)}
@@ -112,6 +116,10 @@ const Points = () => {
 
                         <form className="paymentInputs" onSubmit={claimPoint}>
                             <input
+                                style={{
+                                    backgroundColor: dark ? "#333" : "#f0f0f0",
+                                    color: dark ? "#ccc" : "#f0f0f0",
+                                }}
                                 type="number"
                                 placeholder="Phone number"
                                 className="paymentInput"
@@ -120,6 +128,12 @@ const Points = () => {
                             />
                             {kpay && (
                                 <input
+                                    style={{
+                                        backgroundColor: dark
+                                            ? "#333"
+                                            : "#f0f0f0",
+                                        color: dark ? "#ccc" : "#f0f0f0",
+                                    }}
                                     type="text"
                                     placeholder="Your full name"
                                     className="paymentInput"
@@ -128,6 +142,10 @@ const Points = () => {
                                 />
                             )}
                             <select
+                                style={{
+                                    backgroundColor: dark ? "#333" : "#f0f0f0",
+                                    color: dark ? "#ccc" : "#000",
+                                }}
                                 name="amount"
                                 id="amount"
                                 className="paymentInput"

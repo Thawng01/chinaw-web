@@ -2,6 +2,7 @@ import { IoCameraOutline } from "react-icons/io5";
 import { useRef } from "react";
 
 import "./profileheader.css";
+import useAuthContext from "../../hook/useAuthContext";
 
 const ProfileHeader = ({
     uid,
@@ -16,6 +17,7 @@ const ProfileHeader = ({
     let name = username?.split("@")[0];
 
     const profileRef = useRef();
+    const { dark } = useAuthContext();
 
     function changeProfileBackground() {
         profileRef?.current?.click();
@@ -23,7 +25,10 @@ const ProfileHeader = ({
 
     return (
         <div className="profileContainer">
-            <div className="profileCoverContainer">
+            <div
+                style={{ backgroundColor: dark ? "#333" : "#f0f0f0" }}
+                className="profileCoverContainer"
+            >
                 {background ? (
                     <img
                         src={background}

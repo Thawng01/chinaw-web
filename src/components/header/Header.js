@@ -20,7 +20,8 @@ const Header = () => {
     const [value, setValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
 
-    const { setIsMenuOpen, setUser, user } = useContext(AuthContext);
+    const { setIsMenuOpen, setUser, user, dark, setDark } =
+        useContext(AuthContext);
 
     const { onSearch, users } = useSearch();
 
@@ -46,10 +47,18 @@ const Header = () => {
         navigate(`/profile/${uid}`);
     }
 
+    const handleDarkMode = () => {
+        setDark(!dark);
+        if (dark) {
+            localStorage.setItem("theme", "light");
+        } else {
+            localStorage.setItem("theme", "dark");
+        }
+    };
+
     return (
         <>
             <div className="header">
-                {/* <Menu /> */}
                 <div className="headerWrapper">
                     <div className="headerLeft">
                         <div
@@ -100,10 +109,25 @@ const Header = () => {
                         <Link to="/search" className="searchContainer">
                             <IoSearchOutline className="headerLeftSearchIcon" />
                         </Link>
-                        <div className="notificationContainer">
+                        {/* <div className="notificationContainer">
                             <IoNotificationsOutline className="notiIcon" />
                             <span className="notification">1</span>
+                        </div> */}
+
+                        <div
+                            style={{ backgroundColor: dark ? "#fff" : "#000" }}
+                            className="darkMode"
+                            onClick={handleDarkMode}
+                        >
+                            <div
+                                className="darkModeToggle"
+                                style={{
+                                    backgroundColor: dark ? "#000" : "#fff",
+                                    marginLeft: dark ? 20 : 0,
+                                }}
+                            />
                         </div>
+
                         <div className="accounts" onClick={logOut}>
                             {user ? (
                                 <IoExitOutline className="accountIcon" />

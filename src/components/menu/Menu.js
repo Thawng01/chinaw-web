@@ -1,14 +1,12 @@
 import "./menu.css";
-import { useContext } from "react";
 import { IoClose } from "react-icons/io5";
 
 import SharedMenu from "../sharedmenu/SharedMenu";
-import { AuthContext } from "../auth/AuthContext";
-
 import { useUser } from "../../hook/useUser";
+import useAuthContext from "../../hook/useAuthContext";
 
 const Menu = () => {
-    const { isMenuOpen, setIsMenuOpen } = useContext(AuthContext);
+    const { isMenuOpen, setIsMenuOpen, dark } = useAuthContext();
     const userInfo = useUser();
 
     const closeMenu = (e) => {
@@ -24,7 +22,10 @@ const Menu = () => {
             onClick={(e) => closeMenu(e)}
         >
             <div
-                style={{ width: isMenuOpen ? 300 : 0 }}
+                style={{
+                    width: isMenuOpen ? 300 : 0,
+                    backgroundColor: dark ? "#333" : "#f0f0f0",
+                }}
                 className="menuContainer"
             >
                 {isMenuOpen && (

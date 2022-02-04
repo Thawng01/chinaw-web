@@ -27,8 +27,7 @@
 }
 
 .contactInput:focus {
-    outline-color: #ff1a8c;
-    border-width: 1px;
+    outline: none;
 }
 
 .contactMessage {
@@ -42,9 +41,7 @@
 }
 
 .contactMessage:focus {
-    outline-color: #ff1a8c;
-    border-width: 1px;
-    border-radius: 5px;
+    outline: none;
 }
 
 .contactBtn {

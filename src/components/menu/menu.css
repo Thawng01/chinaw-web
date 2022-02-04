@@ -8,7 +8,6 @@
 }
 
 .menuContainer {
-    background-color: #f0f0f0;
     height: 100vh;
     overflow-y: scroll;
     transition: 0.3s;

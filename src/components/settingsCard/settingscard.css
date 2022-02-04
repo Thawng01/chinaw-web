@@ -28,18 +28,17 @@
 
 .settingsItems {
     margin-left: 10px;
+    max-width: 300px;
 }
 
 .settingsItem {
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 5px;
-    color: #000;
 }
 
 .settingsDesc {
     padding-right: 5px;
-    color: grey;
     font-size: 1rem;
 }
 

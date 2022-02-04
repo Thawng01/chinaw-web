@@ -2,13 +2,17 @@ import { useState } from "react";
 import "./paymentHistoryItem.css";
 
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import useAuthContext from "../../hook/useAuthContext";
 
 const PaymentHistoryItem = ({ item, index }) => {
     const [activeIndex, setActiveIndex] = useState(null);
 
+    const { dark } = useAuthContext();
+
     return (
         <div className="paymentHistoryItem">
             <div
+                style={{ backgroundColor: dark ? "#333" : "#f2f2f2" }}
                 className="paymentHistoryItemContainer"
                 onClick={() =>
                     setActiveIndex(index === activeIndex ? null : index)

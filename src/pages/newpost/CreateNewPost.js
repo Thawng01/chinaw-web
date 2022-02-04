@@ -10,6 +10,7 @@ import { AuthContext } from "../../components/auth/AuthContext";
 import { fetchSinglePost } from "../../store/actions/Post";
 import { useUser } from "../../hook/useUser";
 import useNewPost from "../../hook/useNewPost";
+import useAuthContext from "../../hook/useAuthContext";
 import Loading from "../../components/loading/Loading";
 import Message from "../../components/message/Message";
 
@@ -32,7 +33,7 @@ const CreateNewPost = () => {
     let name = userInfo?.username ? userInfo?.username : userInfo?.email;
     name = name?.split("@")[0];
 
-    const { message, setMessage } = useContext(AuthContext);
+    const { dark, message, setMessage } = useAuthContext();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -82,7 +83,10 @@ const CreateNewPost = () => {
             />
             {loading && <Loading title="Uploading..." />}
             {message && <Message />}
-            <div className="newPostModalWrapper">
+            <div
+                style={{ backgroundColor: dark ? "#333" : "white" }}
+                className="newPostModalWrapper"
+            >
                 <div className="newPostModalUserInfos">
                     <img
                         src={userInfo?.image}
@@ -95,6 +99,7 @@ const CreateNewPost = () => {
                 <div className="newPostInputContainer">
                     <form>
                         <textarea
+                            style={{ color: dark ? "#fff" : "#000" }}
                             ref={ref}
                             type="text"
                             rows={8}

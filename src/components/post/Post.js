@@ -14,6 +14,8 @@ import {
 import { MdDeleteOutline } from "react-icons/md";
 
 import usePostAction from "../../hook/usePostAction";
+import useAuthContext from "../../hook/useAuthContext";
+import Underline from "../Underline";
 
 const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
     const [readMore, setReadMore] = useState(true);
@@ -23,6 +25,7 @@ const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
     const [likeNum, setLikeNum] = useState(post?.likes?.length);
 
     const { onPostLike } = usePostAction();
+    const { dark } = useAuthContext();
 
     const toggleReadMore = () => {
         setReadMore(!readMore);
@@ -44,7 +47,10 @@ const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
 
     return (
         <div className="postWrapperInFeed">
-            <div className="postCards">
+            <div
+                style={{ backgroundColor: dark ? "#333" : "white" }}
+                className="postCards"
+            >
                 <div className="postCardTop">
                     <img src={post.userImage} className="postCardUserImg" />
 
@@ -52,9 +58,17 @@ const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
                         className="postUsernameLink"
                         to={`/profile/${post?.uid}`}
                     >
-                        <span className="postCardUsername">{username}</span>
+                        <span
+                            style={{ color: dark ? "#fff" : "#000" }}
+                            className="postCardUsername"
+                        >
+                            {username}
+                        </span>
                     </Link>
-                    <span className="postCardDate">
+                    <span
+                        style={{ color: dark ? "#ccc" : "gray" }}
+                        className="postCardDate"
+                    >
                         {moment(post?.createdAt).fromNow()}
                     </span>
                 </div>
@@ -69,14 +83,18 @@ const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
                     </div>
                     <img src={post?.image} alt="" className="postCardImg" />
                 </div>
-                <div className="postLine" />
+
+                <Underline />
                 <div className="postCardBottom">
                     {user && user === uid ? (
                         <div
                             className="deletePostIconContainer"
                             onClick={onDelete}
                         >
-                            <MdDeleteOutline className="deleteIcon" />
+                            <MdDeleteOutline
+                                style={{ color: dark ? "#fff" : "#000" }}
+                                className="deleteIcon"
+                            />
                         </div>
                     ) : (
                         <div className="likeContainer">
@@ -87,13 +105,30 @@ const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
                                         className="postIcon"
                                     />
                                 ) : (
-                                    <IoHeartOutline className="postIcon" />
+                                    <IoHeartOutline
+                                        style={{
+                                            color: dark ? "#fff" : "#000",
+                                        }}
+                                        className="postIcon"
+                                    />
                                 )}
                             </div>
                             {likeNum > 0 && (
                                 <>
-                                    <span className="likeCount">{likeNum}</span>
-                                    <span className="likeCountLabel">
+                                    <span
+                                        style={{
+                                            color: dark ? "#ccc" : "gray",
+                                        }}
+                                        className="likeCount"
+                                    >
+                                        {likeNum}
+                                    </span>
+                                    <span
+                                        style={{
+                                            color: dark ? "#ccc" : "gray",
+                                        }}
+                                        className="likeCountLabel"
+                                    >
                                         {likeNum > 1 ? " Likes" : " Like"}
                                     </span>
                                 </>
@@ -108,7 +143,10 @@ const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
                             }}
                             className="editPostIconContainer"
                         >
-                            <IoCreateOutline className="editIcon" />
+                            <IoCreateOutline
+                                style={{ color: dark ? "#fff" : "#000" }}
+                                className="editIcon"
+                            />
                         </Link>
                     ) : (
                         <div className="commentContainer" onClick={onComment}>
@@ -117,14 +155,23 @@ const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
                                     {post?.comments?.length}
                                 </span>
                             )}
-                            <IoChatbubbleEllipsesOutline className="postIcon" />
+                            <IoChatbubbleEllipsesOutline
+                                style={{ color: dark ? "#fff" : "#000" }}
+                                className="postIcon"
+                            />
                         </div>
                     )}
                     <div className="saveIconContainer" onClick={onSave}>
                         {post?.savedBy?.includes(user) ? (
-                            <IoBookmark className="postIcon" />
+                            <IoBookmark
+                                style={{ color: dark ? "#fff" : "#000" }}
+                                className="postIcon"
+                            />
                         ) : (
-                            <IoBookmarkOutline className="postIcon" />
+                            <IoBookmarkOutline
+                                style={{ color: dark ? "#fff" : "#000" }}
+                                className="postIcon"
+                            />
                         )}
                     </div>
                 </div>

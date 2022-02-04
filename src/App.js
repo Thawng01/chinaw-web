@@ -11,6 +11,7 @@ function App() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [user, setUser] = useState(null);
     const [message, setMessage] = useState(null);
+    const [dark, setDark] = useState(false);
 
     useEffect(() => {
         const auth = getAuth();
@@ -21,6 +22,13 @@ function App() {
                 setUser(null);
             }
         });
+
+        const result = localStorage.getItem("theme");
+        if (result === "light") {
+            setDark(false);
+        } else {
+            setDark(true);
+        }
     }, []);
 
     return (
@@ -32,6 +40,8 @@ function App() {
                 setUser,
                 message,
                 setMessage,
+                dark,
+                setDark,
             }}
         >
             <Provider store={store}>

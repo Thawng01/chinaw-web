@@ -12,12 +12,16 @@ import {
     likeComment,
 } from "../../store/actions/Comment";
 import { useUser } from "../../hook/useUser";
+import useAuthContext from "../../hook/useAuthContext";
+import Underline from "../Underline";
 
 const CommentBox = ({ onComment, post }) => {
     const [newComment, setNewComment] = useState("");
     const [indexForDelete, setIndexForDelete] = useState(null);
+
     const ref = useRef();
     const userInfo = useUser();
+    const { dark } = useAuthContext();
 
     const comments = useSelector((state) => state.comments.comments);
 
@@ -88,13 +92,20 @@ const CommentBox = ({ onComment, post }) => {
                 className="closeCommentBox"
                 onClick={onComment}
             />
-            <div className="commentBoxContainer">
-                <div className="commentBoxHeaderContainer">
+            <div
+                style={{ backgroundColor: dark ? "#333" : "#fff" }}
+                className="commentBoxContainer"
+            >
+                <div
+                    style={{ borderBottomColor: dark ? "#ccc" : "#f1f1f1" }}
+                    className="commentBoxHeaderContainer"
+                >
                     <img src={post?.userImage} className="postImgInComment" />
                     <span className="postUsernameInComment">
                         {`${post?.username}'s post`}
                     </span>
                 </div>
+                <Underline />
 
                 <div className="commentBodyContainer">
                     {comments?.map((comment, index) => {
@@ -105,7 +116,15 @@ const CommentBox = ({ onComment, post }) => {
                                     className="commentorImg"
                                 />
                                 <div className="commentorInfos">
-                                    <div className="commentorInfo">
+                                    <div
+                                        style={{
+                                            color: dark ? "#fff" : "#000",
+                                            backgroundColor: dark
+                                                ? "#000"
+                                                : "#f0f0f0",
+                                        }}
+                                        className="commentorInfo"
+                                    >
                                         <h4 className="commentorUsername">
                                             {comment.username}
                                         </h4>
@@ -187,10 +206,13 @@ const CommentBox = ({ onComment, post }) => {
                     })}
                 </div>
 
+                <Underline />
+
                 <div className="commentInputContainer">
                     <div className="commentInputAndPhoto">
                         <Photo className="commentPhotoSelector" />
                         <textarea
+                            style={{ color: dark ? "#fff" : "#000" }}
                             ref={ref}
                             rows={1}
                             type="text"
