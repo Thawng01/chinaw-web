@@ -20,7 +20,6 @@ const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
     const [isLiked, setIsLiked] = useState(
         post?.likes?.includes(user) ? true : false
     );
-
     const [likeNum, setLikeNum] = useState(post?.likes?.length);
 
     const { onPostLike } = usePostAction();
