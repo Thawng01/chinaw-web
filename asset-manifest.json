@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/chinaw-web-version-/static/css/main.821d28aa.css",
-    "main.js": "/chinaw-web-version-/static/js/main.f4baf3c9.js",
+    "main.css": "/chinaw-web-version-/static/css/main.e6274f6a.css",
+    "main.js": "/chinaw-web-version-/static/js/main.c6740d30.js",
     "index.html": "/chinaw-web-version-/index.html",
-    "main.821d28aa.css.map": "/chinaw-web-version-/static/css/main.821d28aa.css.map",
-    "main.f4baf3c9.js.map": "/chinaw-web-version-/static/js/main.f4baf3c9.js.map"
+    "main.e6274f6a.css.map": "/chinaw-web-version-/static/css/main.e6274f6a.css.map",
+    "main.c6740d30.js.map": "/chinaw-web-version-/static/js/main.c6740d30.js.map"
   },
   "entrypoints": [
-    "static/css/main.821d28aa.css",
-    "static/js/main.f4baf3c9.js"
+    "static/css/main.e6274f6a.css",
+    "static/js/main.c6740d30.js"
   ]
 }
