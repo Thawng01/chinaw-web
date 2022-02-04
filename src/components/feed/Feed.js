@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import "./feed.css";
 import NewPost from "../newPost/NewPost";
@@ -6,15 +6,15 @@ import Post from "../post/Post";
 import CommentBox from "../comments/CommentBox";
 import Popup from "../popupcardmodal/Popup";
 import Message from "../message/Message";
-import { AuthContext } from "../auth/AuthContext";
 import usePostAction from "../../hook/usePostAction";
+import useAuthContext from "../../hook/useAuthContext";
 
 const Feed = ({ posts, home, uid, user }) => {
     const [isComment, setIsComment] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
     const [post, setPost] = useState();
 
-    const { message, dark } = useContext(AuthContext);
+    const { message, dark } = useAuthContext();
 
     const { onPostSave } = usePostAction();
 

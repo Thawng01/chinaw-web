@@ -1,6 +1,5 @@
 .fqasAccordion {
     display: flex;
-    background-color: #f1f1f1;
     cursor: pointer;
     width: 70%;
     border-radius: 2px;
@@ -12,11 +11,12 @@
 
 .accordionLabel {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 600px;
+    max-width: 92%;
 }
 
 .accordionIcon {
-    font-size: larger;
+    font-size: 20px;
     color: #ff1a8c;
 }
 

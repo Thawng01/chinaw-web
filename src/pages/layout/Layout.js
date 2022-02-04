@@ -1,14 +1,12 @@
 import "./layout.css";
 import { Outlet } from "react-router-dom";
-import Header from "../../components/header/Header";
 import LeftSide from "../../components/sides/leftSide/LeftSide";
 
 import Menu from "../../components/menu/Menu";
-import { useContext } from "react";
-import { AuthContext } from "../../components/auth/AuthContext";
+import useAuthContext from "../../hook/useAuthContext";
 
 const Layout = () => {
-    const { dark } = useContext(AuthContext);
+    const { dark } = useAuthContext();
     return (
         <div
             style={{

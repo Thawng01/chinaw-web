@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { MdAdd, MdRemove } from "react-icons/md";
+import useAuthContext from "../../hook/useAuthContext";
 import "./fqasItem.css";
 
 const FqasItem = ({ item, index }) => {
     const [activeIndex, setActiveIndex] = useState(null);
+    const { dark } = useAuthContext();
     return (
         <>
             <div
+                style={{ backgroundColor: dark ? "#333" : "#f0f0f0" }}
                 className="fqasAccordion"
                 onClick={() =>
                     setActiveIndex(index === activeIndex ? null : index)
@@ -20,7 +23,12 @@ const FqasItem = ({ item, index }) => {
                 )}
             </div>
             {index === activeIndex && (
-                <div className="fqasAccordionDesc">{item.content}</div>
+                <div
+                    style={{ backgroundColor: dark ? "#333" : "#f0f0f0" }}
+                    className="fqasAccordionDesc"
+                >
+                    {item.content}
+                </div>
             )}
         </>
     );

@@ -2,26 +2,24 @@ import {
     IoEnterOutline,
     IoSearchOutline,
     IoExitOutline,
-    IoNotificationsOutline,
+    // IoNotificationsOutline,
     IoListOutline,
     IoCloseOutline,
 } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { getAuth, signOut } from "firebase/auth";
 
 import "./header.css";
-import { AuthContext } from "../auth/AuthContext";
 import SearchResult from "../searchResult/SearchResult";
 import useSearch from "../../hook/useSearch";
-import Menu from "../menu/Menu";
+import useAuthContext from "../../hook/useAuthContext";
 
 const Header = () => {
     const [value, setValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
 
-    const { setIsMenuOpen, setUser, user, dark, setDark } =
-        useContext(AuthContext);
+    const { setIsMenuOpen, setUser, user, dark, setDark } = useAuthContext();
 
     const { onSearch, users } = useSearch();
 

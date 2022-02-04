@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { AuthContext } from "../auth/AuthContext";
+import useAuthContext from "../../hook/useAuthContext";
+
 import "./message.css";
 
 const Message = () => {
-    const { message, setMessage } = useContext(AuthContext);
+    const { message, setMessage } = useAuthContext();
 
     if (message)
         setTimeout(() => {
