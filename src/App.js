@@ -4,6 +4,7 @@ import { AuthContext } from "./components/auth/AuthContext";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 
+import "./App.css";
 import { store } from "./store/Store";
 import AppRoutes from "./AppRoutes";
 
@@ -29,7 +30,10 @@ function App() {
         } else {
             setDark(true);
         }
-    }, []);
+
+        document.body.style.backgroundColor = dark ? "#000" : "#fff";
+        document.body.style.color = dark ? "#fff" : "#000";
+    }, [dark, user, setUser, setDark]);
 
     return (
         <AuthContext.Provider

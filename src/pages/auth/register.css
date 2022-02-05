@@ -1,5 +1,4 @@
 .register {
-    height: 90vh;
     width: 100vw;
     margin-top: 20px;
 }
@@ -18,20 +17,17 @@
     flex-direction: column;
     justify-content: center;
     padding-left: 30px;
-    /* background-color: khaki; */
 }
 
 .welcomeText {
     font-weight: bold;
     font-size: 45px;
-    color: #000;
 }
 
 .welcomeDesc {
     font-size: 25px;
     font-weight: 700;
     padding-top: 10px;
-    color: #000;
 }
 
 .registerInputContainer {
@@ -60,7 +56,6 @@
     color: #000;
     font-size: 16.5px;
     margin: 10px 0;
-    background-color: #f0f0f0;
 }
 
 .registerInput::placeholder {

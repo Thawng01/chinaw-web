@@ -1,12 +1,12 @@
-import "./newPost.css";
-import { useContext } from "react";
 import { Link } from "react-router-dom";
+
+import "./newPost.css";
 import { useUser } from "../../hook/useUser";
-import { AuthContext } from "../auth/AuthContext";
+import useAuthContext from "../../hook/useAuthContext";
 
 const NewPost = () => {
     const userInfo = useUser();
-    const { user, dark } = useContext(AuthContext);
+    const { user, dark } = useAuthContext();
     return (
         <div
             style={{ backgroundColor: dark ? "#333" : "white" }}

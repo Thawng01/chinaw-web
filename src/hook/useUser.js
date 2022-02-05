@@ -1,13 +1,13 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AuthContext } from "../components/auth/AuthContext";
 
 import { fetchUser } from "../store/actions/User";
+import useAuthContext from "./useAuthContext";
 
 export const useUser = () => {
     const dispatch = useDispatch();
     const userInfo = useSelector((state) => state.user.user);
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthContext();
 
     useEffect(() => {
         const getUserInfo = async () => {

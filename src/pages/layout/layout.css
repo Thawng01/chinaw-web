@@ -18,8 +18,4 @@
     .layout {
         flex-direction: column;
     }
-
-    .layoutContainer {
-        flex: 1;
-    }
 }

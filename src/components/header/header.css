@@ -29,7 +29,6 @@
 }
 
 .headerMenuContainer {
-    margin-right: 10px;
     cursor: pointer;
     display: none;
     height: 40px;
@@ -45,7 +44,6 @@
     color: #fff;
     font-size: 30px;
     margin-top: 5px;
-    margin-left: 5px;
 }
 
 .headerLink {
@@ -173,7 +171,7 @@
 }
 
 /* for small device */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 720px) {
     .headerMenuContainer {
         display: block;
     }
@@ -184,5 +182,15 @@
 
     .headerCenter {
         display: none;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .headerMenuContainer {
+        margin-right: 0px;
+    }
+
+    .headerMenuIcon {
+        margin-left: 0px;
     }
 }

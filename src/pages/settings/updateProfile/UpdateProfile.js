@@ -1,19 +1,19 @@
 import { EditOutlined, PersonOutline } from "@mui/icons-material";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import "./updateprofile.css";
 import { useUser } from "../../../hook/useUser";
 import AppButton from "../../../components/Appbutton/AppButton";
-import { AuthContext } from "../../../components/auth/AuthContext";
 import ProfileFormInput from "../../../components/profileform/ProfileFormInput";
 import ProfilesFormWrapper from "../../../components/profileform/profilesformWrapper/ProfilesFormWrapper";
 import { updateUserProfile } from "../../../store/actions/User";
 import Loading from "../../../components/loading/Loading";
 import Message from "../../../components/message/Message";
+import useAuthContext from "../../../hook/useAuthContext";
 
 const UpdateProfile = () => {
-    const { message, setMessage } = useContext(AuthContext);
+    const { message, setMessage } = useAuthContext();
 
     const userInfo = useUser();
     const [userImage, setUserImage] = useState({ src: userInfo?.image });

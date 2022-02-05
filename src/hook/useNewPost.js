@@ -1,14 +1,14 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { AuthContext } from "../components/auth/AuthContext";
 import { addNewPost, canPost } from "../store/actions/Post";
+import useAuthContext from "./useAuthContext";
 
 const useNewPost = (id, content, newImage, postToUpdate) => {
     const [loading, setLoading] = useState(false);
 
-    const { setMessage, user } = useContext(AuthContext);
+    const { setMessage, user } = useAuthContext();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

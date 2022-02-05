@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -11,9 +11,8 @@ import { getDoc, setDoc, doc } from "firebase/firestore";
 import { db } from "../../db/db";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { AuthContext } from "../../components/auth/AuthContext";
-
 import "./register.css";
+import useAuthContext from "../../hook/useAuthContext";
 
 const Register = () => {
     const [isRegister, setIsRegister] = useState(false);
@@ -22,7 +21,7 @@ const Register = () => {
     const [cPassword, setCpassword] = useState("");
     const [error, setError] = useState(null);
 
-    const { setUser } = useContext(AuthContext);
+    const { setUser, dark } = useAuthContext();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -121,8 +120,16 @@ const Register = () => {
         <div className="register">
             <div className="registerContainer">
                 <div className="welcomeTextContainer">
-                    <h1 className="welcomeText">Welcome...</h1>
-                    <p className="welcomeDesc">
+                    <h1
+                        style={{ color: dark ? "#fff" : "#000" }}
+                        className="welcomeText"
+                    >
+                        Welcome...
+                    </h1>
+                    <p
+                        style={{ color: dark ? "#fff" : "#000" }}
+                        className="welcomeDesc"
+                    >
                         Create your quality content and get paid.
                     </p>
                 </div>
@@ -131,6 +138,10 @@ const Register = () => {
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     <form className="registerInputs" onSubmit={submitUser}>
                         <input
+                            style={{
+                                backgroundColor: dark ? "#333" : "#f0f0f0",
+                                color: dark ? "#fff" : "#000",
+                            }}
                             type="email"
                             placeholder="Email"
                             className="registerInput"
@@ -138,6 +149,10 @@ const Register = () => {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <input
+                            style={{
+                                backgroundColor: dark ? "#333" : "#f0f0f0",
+                                color: dark ? "#fff" : "#000",
+                            }}
                             type="password"
                             placeholder="Password"
                             className="registerInput"
@@ -147,6 +162,10 @@ const Register = () => {
                         />
                         {isRegister && (
                             <input
+                                style={{
+                                    backgroundColor: dark ? "#333" : "#f0f0f0",
+                                    color: dark ? "#fff" : "#000",
+                                }}
                                 type="password"
                                 placeholder="Repeat password"
                                 className="registerInput"
@@ -163,7 +182,10 @@ const Register = () => {
                         />
                     </form>
                     <div className="alreadyHaveAccount">
-                        <p className="alreadyHaveAccountText">
+                        <p
+                            style={{ color: dark ? "#fff" : "#000" }}
+                            className="alreadyHaveAccountText"
+                        >
                             {isRegister
                                 ? "Already have an account?"
                                 : "Don't have an account?"}

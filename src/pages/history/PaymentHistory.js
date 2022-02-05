@@ -1,16 +1,16 @@
-import "./history.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import "./history.css";
 import PaymentHistoryItem from "../../components/paymenthistoryitem/PaymentHistoryItem";
 import CustomBack from "../../components/customBack/CustomBack";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchPointClaim } from "../../store/actions/Point";
-import { AuthContext } from "../../components/auth/AuthContext";
-import { useContext, useEffect } from "react";
+import useAuthContext from "../../hook/useAuthContext";
 
 const PaymentHistory = () => {
     const points = useSelector((state) => state.point.points);
 
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthContext();
 
     const dispatch = useDispatch();
 

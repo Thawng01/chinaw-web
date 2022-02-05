@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../../auth/AuthContext";
 
+import useAuthContext from "../../../hook/useAuthContext";
 import "./leftsidelistitem.css";
 
 const LeftSideListItem = ({ title, desc, onClick, Icon, to }) => {
-    const { dark } = useContext(AuthContext);
+    const { dark } = useAuthContext();
 
     let activeBackgroundColor = {
         backgroundColor: dark ? "#000" : "#fff",

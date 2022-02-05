@@ -1,5 +1,3 @@
-import "./post.css";
-
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { useState } from "react";
@@ -13,11 +11,14 @@ import {
 } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 
+import "./post.css";
 import usePostAction from "../../hook/usePostAction";
 import useAuthContext from "../../hook/useAuthContext";
 import Underline from "../Underline";
 
-const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
+const Post = ({ post, onComment, onDelete, onSave, uid }) => {
+    const { dark, user, setMessage } = useAuthContext();
+
     const [readMore, setReadMore] = useState(true);
     const [isLiked, setIsLiked] = useState(
         post?.likes?.includes(user) ? true : false
@@ -25,13 +26,16 @@ const Post = ({ post, onComment, onDelete, onSave, uid, user }) => {
     const [likeNum, setLikeNum] = useState(post?.likes?.length);
 
     const { onPostLike } = usePostAction();
-    const { dark } = useAuthContext();
 
     const toggleReadMore = () => {
         setReadMore(!readMore);
     };
 
     const onLike = async () => {
+        if (user === null) {
+            setMessage("You have to login first");
+            return;
+        }
         if (isLiked) {
             setLikeNum(likeNum - 1);
             setIsLiked(false);

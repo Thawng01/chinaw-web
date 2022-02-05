@@ -2,11 +2,10 @@ import { Photo } from "@mui/icons-material";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import "./createNewPost.css";
-import { AuthContext } from "../../components/auth/AuthContext";
 import { fetchSinglePost } from "../../store/actions/Post";
 import { useUser } from "../../hook/useUser";
 import useNewPost from "../../hook/useNewPost";

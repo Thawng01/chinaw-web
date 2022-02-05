@@ -1,11 +1,11 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { likePost, savePost, canLike } from "../store/actions/Post";
 import { useDispatch } from "react-redux";
-import { AuthContext } from "../components/auth/AuthContext";
+import useAuthContext from "./useAuthContext";
 
 const usePostAction = () => {
     const dispatch = useDispatch();
-    const { setMessage, user } = useContext(AuthContext);
+    const { setMessage, user } = useAuthContext();
 
     const onPostLike = async (pid, puid) => {
         if (puid === user)

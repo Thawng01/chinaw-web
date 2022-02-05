@@ -4,19 +4,7 @@
     box-sizing: border-box;
 }
 
-light-theme {
-    --light-background-color: #fff;
-}
-
-dark-theme {
-    --dark-background-color: #000;
-}
-
 :root {
     --primary: #ff1a8c;
     --secondary: #4267b2;
-}
-
-* {
-    background-color: var(--dark-background-color);
 }

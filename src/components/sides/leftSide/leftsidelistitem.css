@@ -12,11 +12,6 @@
     cursor: pointer;
 }
 
-/* .leftItem:active {
-    background-color: #f0f0f0;
-    border-radius: 5px;
-} */
-
 .leftIcon {
     margin-right: 20px;
     color: var(--secondary);

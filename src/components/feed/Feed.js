@@ -9,7 +9,7 @@ import Message from "../message/Message";
 import usePostAction from "../../hook/usePostAction";
 import useAuthContext from "../../hook/useAuthContext";
 
-const Feed = ({ posts, home, uid, user }) => {
+const Feed = ({ posts, home, uid }) => {
     const [isComment, setIsComment] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
     const [post, setPost] = useState();
@@ -52,7 +52,6 @@ const Feed = ({ posts, home, uid, user }) => {
                         key={index}
                         post={post}
                         uid={uid}
-                        user={user}
                     />
                 ))}
             </div>

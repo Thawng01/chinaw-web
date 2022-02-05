@@ -1,17 +1,17 @@
 import { useDispatch } from "react-redux";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import "./popup.css";
 import Post from "../post/Post";
 import { deletePost } from "../../store/actions/Post";
 import Loading from "../loading/Loading";
-import { AuthContext } from "../../components/auth/AuthContext";
 import Message from "../message/Message";
+import useAuthContext from "../../hook/useAuthContext";
 
 const Popup = ({ post, onClose }) => {
     const [loading, setLoading] = useState(false);
 
-    const { message, setMessage } = useContext(AuthContext);
+    const { dark, message, setMessage } = useAuthContext();
 
     const dispatch = useDispatch();
 
@@ -36,7 +36,10 @@ const Popup = ({ post, onClose }) => {
         <div className="popup" onClick={(e) => onClosePopup(e)}>
             {loading && <Loading title="Deleting..." />}
             {message && <Message />}
-            <div className="popupContainer">
+            <div
+                style={{ backgroundColor: dark ? "#333" : "#fff" }}
+                className="popupContainer"
+            >
                 <div className="postToDeleteContainer">
                     <Post post={post} />
                 </div>

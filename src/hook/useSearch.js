@@ -1,14 +1,13 @@
-import { useContext } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-import { AuthContext } from "../components/auth/AuthContext";
+
 import { searchForUser } from "../store/actions/User";
+import useAuthContext from "./useAuthContext";
 
 const useSearch = () => {
     const users = useSelector((state) => state.user.filter_users);
     const dispatch = useDispatch();
 
-    const { setMessage } = useContext(AuthContext);
+    const { setMessage } = useAuthContext();
 
     const onSearch = async (e) => {
         try {

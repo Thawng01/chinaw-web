@@ -9,12 +9,12 @@ import {
     HomeOutlined,
 } from "@mui/icons-material";
 
-import { useContext } from "react";
-import { AuthContext } from "../auth/AuthContext";
 import LeftSideListItem from "../sides/leftSide/LeftSideListItem";
+import useAuthContext from "../../hook/useAuthContext";
+import Underline from "../Underline";
 
 const SharedMenu = ({ userInfo }) => {
-    const { setIsMenuOpen, user } = useContext(AuthContext);
+    const { setIsMenuOpen, user } = useAuthContext();
 
     const closeMenu = () => {
         setIsMenuOpen(false);
@@ -61,8 +61,8 @@ const SharedMenu = ({ userInfo }) => {
                     </p>
                 </div>
             </div>
-
-            <div className="leftLine" />
+            <Underline />
+            {/* <div className="leftLine" /> */}
 
             {user && (
                 <ul className="leftItems">

@@ -6,7 +6,6 @@ import useAuthContext from "../../hook/useAuthContext";
 
 const ProfileHeader = ({
     uid,
-    user,
     background,
     image,
     username,
@@ -17,7 +16,7 @@ const ProfileHeader = ({
     let name = username?.split("@")[0];
 
     const profileRef = useRef();
-    const { dark } = useAuthContext();
+    const { dark, user } = useAuthContext();
 
     function changeProfileBackground() {
         profileRef?.current?.click();

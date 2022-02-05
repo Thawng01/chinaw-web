@@ -1,6 +1,10 @@
 import { Photo, Send, ThumbUp } from "@mui/icons-material";
 import { useEffect, useState, useRef } from "react";
-import { IoCloseCircleOutline, IoEllipsisVertical } from "react-icons/io5";
+import {
+    IoArrowBackOutline,
+    IoCloseCircleOutline,
+    IoEllipsisVertical,
+} from "react-icons/io5";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -21,7 +25,7 @@ const CommentBox = ({ onComment, post }) => {
 
     const ref = useRef();
     const userInfo = useUser();
-    const { dark } = useAuthContext();
+    const { dark, setMessage, message } = useAuthContext();
 
     const comments = useSelector((state) => state.comments.comments);
 
@@ -44,7 +48,7 @@ const CommentBox = ({ onComment, post }) => {
             try {
                 await dispatch(fetchComments(post?.id));
             } catch (error) {
-                console.log(error.message);
+                setMessage(error.message);
             }
         };
 
@@ -65,7 +69,7 @@ const CommentBox = ({ onComment, post }) => {
                 )
             );
         } catch (error) {
-            console.log(error.message);
+            setMessage(error.message);
         }
     };
 
@@ -74,7 +78,7 @@ const CommentBox = ({ onComment, post }) => {
         try {
             await dispatch(deleteComment(cid, post?.id, uid));
         } catch (error) {
-            console.log(error.message);
+            setMessage(error.message);
         }
     };
 
@@ -82,7 +86,7 @@ const CommentBox = ({ onComment, post }) => {
         try {
             await dispatch(likeComment(cid, userInfo?.uid));
         } catch (error) {
-            console.log(error.message);
+            setMessage(error.message);
         }
     };
 
@@ -100,6 +104,13 @@ const CommentBox = ({ onComment, post }) => {
                     style={{ borderBottomColor: dark ? "#ccc" : "#f1f1f1" }}
                     className="commentBoxHeaderContainer"
                 >
+                    <div className="commentBackIconContainer">
+                        <IoArrowBackOutline
+                            className="commentBackIcon"
+                            onClick={onComment}
+                        />
+                    </div>
+
                     <img src={post?.userImage} className="postImgInComment" />
                     <span className="postUsernameInComment">
                         {`${post?.username}'s post`}

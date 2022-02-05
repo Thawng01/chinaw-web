@@ -1,13 +1,14 @@
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+
 import ProfilesFormWrapper from "../../../components/profileform/profilesformWrapper/ProfilesFormWrapper";
 import { LockOutlined } from "@mui/icons-material";
 import ProfileFormInput from "../../../components/profileform/ProfileFormInput";
 import AppButton from "../../../components/Appbutton/AppButton";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../../components/auth/AuthContext";
-import { useDispatch } from "react-redux";
 import { updateUserPassword } from "../../../store/actions/User";
 import Loading from "../../../components/loading/Loading";
 import Message from "../../../components/message/Message";
+import useAuthContext from "../../../hook/useAuthContext";
 
 const ChangePassword = () => {
     const [currentP, setCurrentp] = useState("");
@@ -15,7 +16,7 @@ const ChangePassword = () => {
     const [cPassword, setCpassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const { message, setMessage } = useContext(AuthContext);
+    const { message, setMessage } = useAuthContext();
 
     const dispatch = useDispatch();
 

@@ -1,19 +1,18 @@
 import "./profile.css";
 import { useParams, Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchUserPost, updateProfileBg } from "../../store/actions/User";
 import RightSide from "../../components/sides/rightSide/RightSide";
 import ProfileHeader from "../../components/profileHeader/ProfileHeader";
 import Feed from "../../components/feed/Feed";
-import { AuthContext } from "../../components/auth/AuthContext";
-import Message from "../../components/message/Message";
+import useAuthContext from "../../hook/useAuthContext";
 
 const ProfileScreen = () => {
     const { id } = useParams();
 
-    const { user, message, setMessage } = useContext(AuthContext);
+    const { user, setMessage } = useAuthContext();
 
     const userPosts = useSelector((state) => state.user.userPosts);
     const dispatch = useDispatch();
@@ -42,10 +41,8 @@ const ProfileScreen = () => {
 
     return (
         <div className="profile">
-            {message && <Message />}
             <ProfileHeader
                 uid={id}
-                user={user}
                 background={userPosts?.background}
                 image={userPosts?.image}
                 username={
@@ -58,11 +55,7 @@ const ProfileScreen = () => {
 
             {userPosts?.post?.length > 0 ? (
                 <div className="profileBodyContainer">
-                    <Feed
-                        posts={userPosts?.post}
-                        user={user}
-                        uid={userPosts?.uid}
-                    />
+                    <Feed posts={userPosts?.post} uid={userPosts?.uid} />
 
                     <RightSide />
                 </div>

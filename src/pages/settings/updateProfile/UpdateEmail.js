@@ -1,15 +1,16 @@
 import ProfileFormInput from "../../../components/profileform/ProfileFormInput";
 
 import { EmailOutlined, LockOutlined } from "@mui/icons-material";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
+
 import ProfilesFormWrapper from "../../../components/profileform/profilesformWrapper/ProfilesFormWrapper";
 import AppButton from "../../../components/Appbutton/AppButton";
 import { useUser } from "../../../hook/useUser";
-import { useContext, useState } from "react";
 import { updateUserEmail } from "../../../store/actions/User";
-import { AuthContext } from "../../../components/auth/AuthContext";
 import Loading from "../../../components/loading/Loading";
 import Message from "../../../components/message/Message";
+import useAuthContext from "../../../hook/useAuthContext";
 
 const UpdateEmail = () => {
     const userInfo = useUser();
@@ -17,7 +18,7 @@ const UpdateEmail = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const { message, setMessage } = useContext(AuthContext);
+    const { message, setMessage } = useAuthContext();
 
     const dispatch = useDispatch();
 
