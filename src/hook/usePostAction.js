@@ -9,11 +9,14 @@ const usePostAction = () => {
 
     const onPostLike = async (pid, puid) => {
         if (puid === user)
-            return setMessage("You are not allowed to like your own post");
+            return setMessage({
+                text: "You are not allowed to like your own post",
+                type: "error",
+            });
         try {
             await dispatch(likePost(user, pid));
         } catch (error) {
-            setMessage(error.message);
+            setMessage({ text: error.message, type: "error" });
         }
     };
 
@@ -21,7 +24,7 @@ const usePostAction = () => {
         try {
             await dispatch(savePost(user, pid));
         } catch (error) {
-            setMessage(error.message);
+            setMessage({ text: error.message, type: "error" });
         }
     };
 
@@ -31,7 +34,7 @@ const usePostAction = () => {
             try {
                 await dispatch(canLike(user));
             } catch (error) {
-                setMessage(error.message);
+                setMessage({ text: error.message, type: "error" });
             }
         };
 

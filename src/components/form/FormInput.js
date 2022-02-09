@@ -1,8 +1,8 @@
-import "./profileforminput.css";
+import "./forminput.css";
 
 import useAuthContext from "../../hook/useAuthContext";
 
-const ProfileFormInput = ({ Icon, type, placeholder, value, onChange }) => {
+const FormInput = ({ Icon, type, placeholder, value, onChange }) => {
     const { dark } = useAuthContext();
 
     return (
@@ -12,7 +12,10 @@ const ProfileFormInput = ({ Icon, type, placeholder, value, onChange }) => {
         >
             <Icon style={{ marginLeft: 6, color: dark ? "#ccc" : "grey" }} />
             <input
-                style={{ color: dark ? "#fff" : "#000" }}
+                style={{
+                    backgroundColor: dark ? "#333" : "#f0f0f0",
+                    color: dark ? "#fff" : "#000",
+                }}
                 type={type}
                 placeholder={placeholder}
                 value={value}
@@ -23,4 +26,4 @@ const ProfileFormInput = ({ Icon, type, placeholder, value, onChange }) => {
     );
 };
 
-export default ProfileFormInput;
+export default FormInput;

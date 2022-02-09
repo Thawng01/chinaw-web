@@ -1,16 +1,16 @@
-import ProfileFormInput from "../../../components/profileform/ProfileFormInput";
+import FormInput from "../../../components/form/FormInput";
 
 import { EmailOutlined, LockOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import ProfilesFormWrapper from "../../../components/profileform/profilesformWrapper/ProfilesFormWrapper";
+import ProfilesFormWrapper from "../../../components/form/profilesformWrapper/ProfilesFormWrapper";
 import AppButton from "../../../components/Appbutton/AppButton";
 import { useUser } from "../../../hook/useUser";
 import { updateUserEmail } from "../../../store/actions/User";
 import Loading from "../../../components/loading/Loading";
-import Message from "../../../components/message/Message";
 import useAuthContext from "../../../hook/useAuthContext";
+import useValidation from "../../../hook/useValidation";
 
 const UpdateEmail = () => {
     const userInfo = useUser();
@@ -18,7 +18,8 @@ const UpdateEmail = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const { message, setMessage } = useAuthContext();
+    const { setMessage } = useAuthContext();
+    const { error, validate } = useValidation();
 
     const dispatch = useDispatch();
 
@@ -28,26 +29,39 @@ const UpdateEmail = () => {
         try {
             await dispatch(updateUserEmail(userInfo?.email, email, password));
             setPassword("");
-            setMessage("You have successfully updated your email");
+            setMessage({
+                text: "You have successfully updated your email",
+                type: "success",
+            });
         } catch (error) {
-            setMessage(error.message);
+            validate(error);
         }
         setLoading(false);
     };
 
     return (
         <>
-            {message && <Message message={message} />}
-            {loading && <Loading title="Updating..." />}
-            <ProfilesFormWrapper height={190} onSubmit={onUpdateEmail}>
-                <ProfileFormInput
+            {loading && <Loading />}
+            <ProfilesFormWrapper height={175} onSubmit={onUpdateEmail}>
+                {error && (
+                    <p
+                        style={{
+                            color: "red",
+                            position: "absolute",
+                            marginTop: -200,
+                        }}
+                    >
+                        {error}
+                    </p>
+                )}
+                <FormInput
                     Icon={EmailOutlined}
                     type="email"
                     placeholder="Enter your Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <ProfileFormInput
+                <FormInput
                     Icon={LockOutlined}
                     type="password"
                     placeholder="Enter your password"

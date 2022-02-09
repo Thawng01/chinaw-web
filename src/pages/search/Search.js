@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import SearchResult from "../../components/searchResult/SearchResult";
 import useSearch from "../../hook/useSearch";
 import "./search.css";
 
 const Search = () => {
-    const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = useState("");
 
     const { onSearch, users } = useSearch();
@@ -18,10 +18,10 @@ const Search = () => {
         onSearch(e);
     };
 
-    const toProfile = (uid) => {
-        setIsFocused(false);
+    function toProfile(uid) {
+        setValue("");
         navigate(`/profile/${uid}`);
-    };
+    }
 
     return (
         <div className="search">
@@ -30,19 +30,17 @@ const Search = () => {
                     type="text"
                     className="searchInput"
                     placeholder="Search..."
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
                     onChange={searchUser}
                     value={value}
                     ref={searchRef}
                 />
 
-                {isFocused && (
+                {value && (
                     <SearchResult
                         users={users}
                         searchRef={searchRef}
-                        toProfile={toProfile}
                         value={value}
+                        toProfile={toProfile}
                     />
                 )}
             </div>

@@ -33,7 +33,7 @@ const Post = ({ post, onComment, onDelete, onSave, uid }) => {
 
     const onLike = async () => {
         if (user === null) {
-            setMessage("You have to login first");
+            setMessage({ text: "You have to login first", type: "error" });
             return;
         }
         if (isLiked) {

@@ -3,12 +3,13 @@
     flex: 1;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 .profilesformContainer {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 35%;
     align-items: center;
     justify-content: space-evenly;
     margin-top: 30px;
@@ -23,5 +24,11 @@
 @media screen and (max-width: 650px) {
     .profilesformContainer {
         width: 90%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .profilesformContainer {
+        width: 95%;
     }
 }

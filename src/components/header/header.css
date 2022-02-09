@@ -8,10 +8,10 @@
     );
     display: flex;
     height: 60px;
-    top: 0;
     width: 100%;
     position: sticky;
     z-index: 99;
+    transition: 0.7s;
 }
 
 .headerWrapper {

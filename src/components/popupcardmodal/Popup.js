@@ -5,13 +5,12 @@ import "./popup.css";
 import Post from "../post/Post";
 import { deletePost } from "../../store/actions/Post";
 import Loading from "../loading/Loading";
-import Message from "../message/Message";
 import useAuthContext from "../../hook/useAuthContext";
 
 const Popup = ({ post, onClose }) => {
     const [loading, setLoading] = useState(false);
 
-    const { dark, message, setMessage } = useAuthContext();
+    const { dark, setMessage } = useAuthContext();
 
     const dispatch = useDispatch();
 
@@ -21,7 +20,7 @@ const Popup = ({ post, onClose }) => {
             await dispatch(deletePost(post?.id));
             onClose();
         } catch (error) {
-            setMessage(error.message);
+            setMessage({ text: error.message, type: "error" });
         }
         setLoading(false);
     };
@@ -35,7 +34,6 @@ const Popup = ({ post, onClose }) => {
     return (
         <div className="popup" onClick={(e) => onClosePopup(e)}>
             {loading && <Loading title="Deleting..." />}
-            {message && <Message />}
             <div
                 style={{ backgroundColor: dark ? "#333" : "#fff" }}
                 className="popupContainer"

@@ -130,6 +130,8 @@ export const addNewPost = (content, image, uid, pid, imageToUpdate) => {
 
 export const fetchPosts = () => {
     return async (dispatch) => {
+        dispatch({ type: "posts/loading" });
+
         const q = query(collection(db, "Posts"), orderBy("createdAt", "desc"));
         onSnapshot(q, onSuccess);
 
@@ -144,7 +146,8 @@ export const fetchPosts = () => {
 
 export const fetchSinglePost = (id) => {
     return async (dispatch) => {
-        const result = await getDoc(doc(firestore, "Posts", id));
+        dispatch({ type: "posts/loading" });
+        const result = await getDoc(doc(db, "Posts", id));
         if (result.exists === false)
             throw new Error("No post found with the given id");
         const post = result.data();

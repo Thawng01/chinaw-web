@@ -1,31 +1,34 @@
-import { Photo, Send, ThumbUp } from "@mui/icons-material";
+import { Photo, Send } from "@mui/icons-material";
 import { useEffect, useState, useRef } from "react";
 import {
     IoArrowBackOutline,
     IoCloseCircleOutline,
-    IoEllipsisVertical,
+    IoCloseOutline,
 } from "react-icons/io5";
-import moment from "moment";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import "./commentBox.css";
-import {
-    fetchComments,
-    createNewComment,
-    deleteComment,
-    likeComment,
-} from "../../store/actions/Comment";
+import { fetchComments, createNewComment } from "../../store/actions/Comment";
 import { useUser } from "../../hook/useUser";
 import useAuthContext from "../../hook/useAuthContext";
 import Underline from "../Underline";
+import CommentItem from "./CommentItem";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CommentBox = ({ onComment, post }) => {
     const [newComment, setNewComment] = useState("");
     const [indexForDelete, setIndexForDelete] = useState(null);
+    const [commentImg, setCommentImg] = useState();
 
     const ref = useRef();
+    const inputRef = useRef();
+
     const userInfo = useUser();
-    const { dark, setMessage, message } = useAuthContext();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const { dark, setMessage, user } = useAuthContext();
 
     const comments = useSelector((state) => state.comments.comments);
 
@@ -44,12 +47,8 @@ const CommentBox = ({ onComment, post }) => {
     };
 
     useEffect(() => {
-        const getComment = async () => {
-            try {
-                await dispatch(fetchComments(post?.id));
-            } catch (error) {
-                setMessage(error.message);
-            }
+        const getComment = () => {
+            dispatch(fetchComments(post?.id));
         };
 
         ref?.current?.focus();
@@ -57,11 +56,17 @@ const CommentBox = ({ onComment, post }) => {
     }, [dispatch, post?.id]);
 
     const createComment = async () => {
+        if (user === null) {
+            navigate("/register", { state: location });
+            return;
+        }
         setNewComment("");
+        setCommentImg("");
         try {
             await dispatch(
                 createNewComment(
                     newComment,
+                    commentImg,
                     post?.id,
                     userInfo?.uid,
                     userInfo?.image,
@@ -69,26 +74,37 @@ const CommentBox = ({ onComment, post }) => {
                 )
             );
         } catch (error) {
-            setMessage(error.message);
+            setMessage({ text: error.message, type: "error" });
         }
     };
 
-    const onDeleteComment = async (cid, uid) => {
-        setIndexForDelete(null);
-        try {
-            await dispatch(deleteComment(cid, post?.id, uid));
-        } catch (error) {
-            setMessage(error.message);
-        }
-    };
+    function selectCommentImg() {
+        inputRef?.current?.click();
+    }
 
-    const onLikeComment = async (cid) => {
-        try {
-            await dispatch(likeComment(cid, userInfo?.uid));
-        } catch (error) {
-            setMessage(error.message);
+    function onSelectImg(e) {
+        if (e.target.files && e.target.files[0]) {
+            setCommentImg({
+                src: URL.createObjectURL(e.target.files[0]),
+                file: e.target.files[0],
+            });
         }
-    };
+    }
+
+    const commentItem = comments?.map((comment, index) => {
+        return (
+            <CommentItem
+                key={index}
+                pid={post.id}
+                index={index}
+                comment={comment}
+                indexForDelete={indexForDelete}
+                onToggleDeleteAction={() =>
+                    setIndexForDelete(index === indexForDelete ? null : index)
+                }
+            />
+        );
+    });
 
     return (
         <div className="commentBox" onClick={(e) => closeCommentBox(e)}>
@@ -117,113 +133,40 @@ const CommentBox = ({ onComment, post }) => {
                     </span>
                 </div>
                 <Underline />
-
                 <div className="commentBodyContainer">
-                    {comments?.map((comment, index) => {
-                        return (
-                            <div key={index} className="commentorsContainer">
-                                <img
-                                    src={comment.userImage}
-                                    className="commentorImg"
-                                />
-                                <div className="commentorInfos">
-                                    <div
-                                        style={{
-                                            color: dark ? "#fff" : "#000",
-                                            backgroundColor: dark
-                                                ? "#000"
-                                                : "#f0f0f0",
-                                        }}
-                                        className="commentorInfo"
-                                    >
-                                        <h4 className="commentorUsername">
-                                            {comment.username}
-                                        </h4>
-                                        <p className="commentBoxText">
-                                            {comment.comment}
-                                        </p>
-                                    </div>
-                                    <div className="commemtBoxInfo">
-                                        <span className="commentedDate">
-                                            {moment(
-                                                comment?.commentedAt
-                                            ).fromNow()}
-                                        </span>
-                                        <ThumbUp
-                                            onClick={() =>
-                                                onLikeComment(comment.id)
-                                            }
-                                            sx={{ fontSize: 18 }}
-                                            style={{
-                                                color: comment?.likes?.includes(
-                                                    userInfo?.uid
-                                                )
-                                                    ? "#ff1a8c"
-                                                    : "gray",
-                                            }}
-                                            className="commentLikeAction"
-                                        />
-                                        {comment?.likes?.length > 0 && (
-                                            <>
-                                                <span className="commentLikeNum">
-                                                    {comment?.likes?.length}
-                                                </span>
-                                                <span className="commentLikeLabel">
-                                                    {comment?.likes?.length > 1
-                                                        ? "Likes"
-                                                        : "Like"}
-                                                </span>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                                {userInfo?.uid === comment.uid && (
-                                    <div className="moreHor">
-                                        <div
-                                            className="commentDeleteIconContainer"
-                                            onClick={() =>
-                                                setIndexForDelete(
-                                                    index === indexForDelete
-                                                        ? null
-                                                        : index
-                                                )
-                                            }
-                                        >
-                                            <IoEllipsisVertical />
-                                        </div>
-
-                                        {indexForDelete === index && (
-                                            <div className="commentDeleteBox">
-                                                <p
-                                                    className="commentDelete"
-                                                    onClick={() =>
-                                                        onDeleteComment(
-                                                            comment.id,
-                                                            comment.uid
-                                                        )
-                                                    }
-                                                >
-                                                    Delete
-                                                </p>
-                                                <p className="commentEdit">
-                                                    Edit
-                                                </p>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        );
-                    })}
+                    {commentItem}
+                    {commentImg && (
+                        <div className="commentImgContainer">
+                            <IoCloseOutline
+                                className="commentImgDeleteIcon"
+                                onClick={() => setCommentImg(null)}
+                            />
+                            <img
+                                src={commentImg.src}
+                                className="selectedCommentImg"
+                            />
+                        </div>
+                    )}
                 </div>
 
                 <Underline />
-
                 <div className="commentInputContainer">
                     <div className="commentInputAndPhoto">
-                        <Photo className="commentPhotoSelector" />
+                        <input
+                            ref={inputRef}
+                            type="file"
+                            style={{ display: "none" }}
+                            onChange={(e) => onSelectImg(e)}
+                        />
+                        <Photo
+                            className="commentPhotoSelector"
+                            onClick={selectCommentImg}
+                        />
                         <textarea
-                            style={{ color: dark ? "#fff" : "#000" }}
+                            style={{
+                                backgroundColor: dark ? "#333" : "#fff",
+                                color: dark ? "#fff" : "#000",
+                            }}
                             ref={ref}
                             rows={1}
                             type="text"

@@ -46,6 +46,8 @@ export const fetchUser = (uid) => {
 
 export const fetchUserPost = (uid) => {
     return async (dispatch) => {
+        dispatch({ type: "users/loading" });
+
         const result = await getDoc(doc(db, "Users", uid));
         const user = result.data();
 

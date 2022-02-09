@@ -7,25 +7,33 @@ import {
     IoCloseOutline,
 } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
 
 import "./header.css";
 import SearchResult from "../searchResult/SearchResult";
 import useSearch from "../../hook/useSearch";
 import useAuthContext from "../../hook/useAuthContext";
+import useScroll from "../../hook/useScroll";
 
 const Header = () => {
     const [value, setValue] = useState("");
-    const [isFocused, setIsFocused] = useState(false);
-
     const { setIsMenuOpen, setUser, user, dark, setDark } = useAuthContext();
 
     const { onSearch, users } = useSearch();
+    const { buttonVisible, handleScroll } = useScroll();
 
     const searchRef = useRef();
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [handleScroll]);
 
     const searchUser = (e) => {
         setValue(e.target.value);
@@ -41,7 +49,7 @@ const Header = () => {
     }
 
     function toProfile(uid) {
-        setIsFocused(false);
+        setValue("");
         navigate(`/profile/${uid}`);
     }
 
@@ -56,7 +64,17 @@ const Header = () => {
 
     return (
         <>
-            <div className="header">
+            <div
+                style={{
+                    top:
+                        window.innerWidth <= 720
+                            ? buttonVisible
+                                ? 0
+                                : -60
+                            : 0,
+                }}
+                className="header"
+            >
                 <div className="headerWrapper">
                     <div className="headerLeft">
                         <div
@@ -83,8 +101,6 @@ const Header = () => {
                             className="headerSearchInput"
                             value={value}
                             onChange={searchUser}
-                            onFocus={() => setIsFocused(true)}
-                            onBlur={() => setIsFocused(false)}
                         />
                         {value && (
                             <IoCloseOutline
@@ -93,11 +109,11 @@ const Header = () => {
                             />
                         )}
 
-                        {isFocused && (
+                        {value && (
                             <SearchResult
                                 users={users}
-                                toProfile={toProfile}
                                 value={value}
+                                toProfile={toProfile}
                                 searchRef={searchRef}
                             />
                         )}

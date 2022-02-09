@@ -4,21 +4,27 @@ import { db } from "../../db/db";
 import FqasItem from "../../components/fqasItem/FqasItem";
 import "./faqs.css";
 import { useEffect, useState } from "react";
+import useAuthContext from "../../hook/useAuthContext";
 
 const Faqs = () => {
     const [fqas, setFqas] = useState();
+    const { setMessage } = useAuthContext();
 
     useEffect(() => {
         const getFqas = async () => {
-            const q = query(collection(db, "FAQs"), orderBy("date", "asc"));
+            try {
+                const q = query(collection(db, "FAQs"), orderBy("date", "asc"));
 
-            const fqas = await getDocs(q);
-            const result = fqas.docs.map((doc) => doc.data());
-            setFqas(result);
+                const fqas = await getDocs(q);
+                const result = fqas.docs.map((doc) => doc.data());
+                setFqas(result);
+            } catch (error) {
+                setMessage({ text: error.message, type: "error" });
+            }
         };
 
         getFqas();
-    }, []);
+    }, [setFqas]);
 
     return (
         <div className="faqsContainer">

@@ -13,7 +13,7 @@ const useSearch = () => {
         try {
             await dispatch(searchForUser(e.target.value));
         } catch (error) {
-            setMessage(error.message);
+            setMessage({ text: error.message, type: "error" });
         }
     };
 

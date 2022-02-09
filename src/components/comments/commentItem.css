@@ -1,0 +1,87 @@
+.commentorsContainer {
+    display: flex;
+    margin: 10px 10px 25px 10px;
+    position: relative;
+}
+
+.commentorInfos {
+    margin: 0 10px;
+}
+
+.commentorInfo {
+    padding: 7px 10px;
+    border-radius: 0px 15px 5px 15px;
+    margin-top: 10px;
+}
+
+.commentorUsername {
+    margin-bottom: 3px;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.commentorImg {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.commemtBoxInfo {
+    display: flex;
+    align-items: center;
+    margin-top: 1px;
+    position: absolute;
+    bottom: -3;
+}
+
+.commentImg {
+    height: 110px;
+    width: 150px;
+    margin-top: 5px;
+    object-fit: contain;
+}
+
+.commentedDate {
+    font-size: 13px;
+    color: grey;
+}
+
+.commentLikeAction {
+    margin: 0 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.commentLikeNum,
+.commentLikeLabel {
+    font-size: 13px;
+    margin-right: 5px;
+}
+
+.moreHor {
+    margin-top: 18px;
+}
+
+.commentDeleteIconContainer {
+    cursor: pointer;
+}
+
+.commentDeleteBox {
+    position: absolute;
+    height: 40px;
+    width: 120px;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    border-radius: 4px;
+    z-index: 99;
+    -webkit-box-shadow: 1px 3px 9px 6px rgba(0, 0, 0, 0.04);
+    box-shadow: 1px 3px 9px 6px rgba(0, 0, 0, 0.04);
+}
+
+.commentDeleteBox p {
+    padding: 9px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}

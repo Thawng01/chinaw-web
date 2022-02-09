@@ -5,7 +5,6 @@ import NewPost from "../newPost/NewPost";
 import Post from "../post/Post";
 import CommentBox from "../comments/CommentBox";
 import Popup from "../popupcardmodal/Popup";
-import Message from "../message/Message";
 import usePostAction from "../../hook/usePostAction";
 import useAuthContext from "../../hook/useAuthContext";
 
@@ -14,7 +13,7 @@ const Feed = ({ posts, home, uid }) => {
     const [isDelete, setIsDelete] = useState(false);
     const [post, setPost] = useState();
 
-    const { message, dark } = useAuthContext();
+    const { dark } = useAuthContext();
 
     const { onPostSave } = usePostAction();
 
@@ -42,7 +41,6 @@ const Feed = ({ posts, home, uid }) => {
                 style={{ backgroundColor: dark ? "#000" : "#fff" }}
                 className="feed"
             >
-                {message && <Message />}
                 {home && <NewPost />}
                 {posts?.map((post, index) => (
                     <Post

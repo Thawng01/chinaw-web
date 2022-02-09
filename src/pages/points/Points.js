@@ -26,27 +26,39 @@ const Points = () => {
 
         if (kpay) {
             if (!phone || !name) {
-                return setMessage("Please fill the required field");
+                return setMessage({
+                    text: "Please fill the required field",
+                    type: "error",
+                });
             }
         } else {
             if (!phone) {
-                return setMessage("Please fill the required field");
+                return setMessage({
+                    text: "Please fill the required field",
+                    type: "error",
+                });
             }
         }
 
         if (userInfor?.points < amount) {
-            return setMessage("Your balance is insufficient");
+            return setMessage({
+                text: "Your balance is insufficient",
+                type: "error",
+            });
         }
 
         setLoading(true);
 
         try {
             await dispatch(addNewClaimPoint(phone, amount, name));
-            setMessage("You have successfully submitted");
+            setMessage({
+                text: "You have successfully submitted",
+                type: "success",
+            });
             setPhone("");
             setName("");
         } catch (error) {
-            setMessage(error.message);
+            setMessage({ text: error.message, type: "error" });
         }
 
         setLoading(false);
@@ -55,7 +67,6 @@ const Points = () => {
     return (
         <>
             <div className="pointContainer">
-                {message && <Message />}
                 {loading && <Loading title="Submitting..." />}
                 <h2 className="pointAmountLabel">
                     Your Balance :

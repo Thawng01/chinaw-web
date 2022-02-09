@@ -5,14 +5,20 @@ import "./message.css";
 const Message = () => {
     const { message, setMessage } = useAuthContext();
 
-    if (message)
+    if (message?.text)
         setTimeout(() => {
             setMessage(null);
         }, 3000);
 
     return (
-        <div className="error">
-            <p className="errorText">{message}</p>
+        <div
+            style={{
+                top: message?.text ? 0 : -50,
+                backgroundColor: message?.type === "success" ? "green" : "red",
+            }}
+            className="error"
+        >
+            <p className="errorText">{message?.text}</p>
         </div>
     );
 };

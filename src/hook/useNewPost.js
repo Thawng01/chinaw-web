@@ -19,7 +19,7 @@ const useNewPost = (id, content, newImage, postToUpdate) => {
             try {
                 await dispatch(canPost(user));
             } catch (error) {
-                setMessage(error.message);
+                setMessage({ text: error.message, type: "error" });
             }
         }
 
@@ -45,7 +45,7 @@ const useNewPost = (id, content, newImage, postToUpdate) => {
             }
             navigate(-1);
         } catch (error) {
-            setMessage(error.message);
+            setMessage({ text: error.message, type: "error" });
         }
 
         setLoading(false);

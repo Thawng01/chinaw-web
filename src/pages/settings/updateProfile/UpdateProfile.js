@@ -5,15 +5,14 @@ import { useDispatch } from "react-redux";
 import "./updateprofile.css";
 import { useUser } from "../../../hook/useUser";
 import AppButton from "../../../components/Appbutton/AppButton";
-import ProfileFormInput from "../../../components/profileform/ProfileFormInput";
-import ProfilesFormWrapper from "../../../components/profileform/profilesformWrapper/ProfilesFormWrapper";
+import FormInput from "../../../components/form/FormInput";
+import ProfilesFormWrapper from "../../../components/form/profilesformWrapper/ProfilesFormWrapper";
 import { updateUserProfile } from "../../../store/actions/User";
 import Loading from "../../../components/loading/Loading";
-import Message from "../../../components/message/Message";
 import useAuthContext from "../../../hook/useAuthContext";
 
 const UpdateProfile = () => {
-    const { message, setMessage } = useAuthContext();
+    const { setMessage } = useAuthContext();
 
     const userInfo = useUser();
     const [userImage, setUserImage] = useState({ src: userInfo?.image });
@@ -32,9 +31,12 @@ const UpdateProfile = () => {
                 updateUserProfile(username, userImage, bio, userInfo?.uid)
             );
 
-            setMessage("You have successfully updated your profile");
+            setMessage({
+                text: "You have successfully updated your profile",
+                type: "success",
+            });
         } catch (error) {
-            console.log(error.message);
+            setMessage({ text: error.message, type: "error" });
         }
 
         setLoading(false);
@@ -55,9 +57,8 @@ const UpdateProfile = () => {
 
     return (
         <>
-            {message && <Message />}
-            {loading && <Loading title="Updating..." />}
-            <ProfilesFormWrapper height={300} onSubmit={updateProfile}>
+            {loading && <Loading />}
+            <ProfilesFormWrapper height={280} onSubmit={updateProfile}>
                 <img src={userImage?.src} alt="" className="profileUpdateImg" />
                 <input
                     type="file"
@@ -69,14 +70,14 @@ const UpdateProfile = () => {
                     Change photo
                 </p>
 
-                <ProfileFormInput
+                <FormInput
                     Icon={PersonOutline}
                     type="text"
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <ProfileFormInput
+                <FormInput
                     Icon={EditOutlined}
                     type="text"
                     placeholder="Bio"

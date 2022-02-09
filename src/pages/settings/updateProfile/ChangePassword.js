@@ -1,14 +1,14 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
-import ProfilesFormWrapper from "../../../components/profileform/profilesformWrapper/ProfilesFormWrapper";
+import ProfilesFormWrapper from "../../../components/form/profilesformWrapper/ProfilesFormWrapper";
 import { LockOutlined } from "@mui/icons-material";
-import ProfileFormInput from "../../../components/profileform/ProfileFormInput";
+import FormInput from "../../../components/form/FormInput";
 import AppButton from "../../../components/Appbutton/AppButton";
 import { updateUserPassword } from "../../../store/actions/User";
 import Loading from "../../../components/loading/Loading";
-import Message from "../../../components/message/Message";
 import useAuthContext from "../../../hook/useAuthContext";
+import useValidation from "../../../hook/useValidation";
 
 const ChangePassword = () => {
     const [currentP, setCurrentp] = useState("");
@@ -16,17 +16,18 @@ const ChangePassword = () => {
     const [cPassword, setCpassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const { message, setMessage } = useAuthContext();
+    const { setMessage } = useAuthContext();
+    const { error, validate, setError } = useValidation();
 
     const dispatch = useDispatch();
 
     async function onUpdatePassword(e) {
         e.preventDefault();
         if (!currentP || !password || !cPassword)
-            return setMessage("Please fill the required field");
+            return setError("Please fill the required field");
 
         if (password !== cPassword)
-            return setMessage("Passwords are not matching");
+            return setError("Passwords are not matching");
 
         setLoading(true);
         try {
@@ -34,9 +35,13 @@ const ChangePassword = () => {
             setCurrentp("");
             setPassword("");
             setCpassword("");
-            setMessage("You have successfully changed your password");
+            setMessage({
+                text: "You have successfully changed your password",
+                type: "success",
+            });
         } catch (error) {
-            setMessage(error.message);
+            // setMessage({ text: error.message, type: "error" });
+            validate(error);
         }
 
         setLoading(false);
@@ -44,24 +49,35 @@ const ChangePassword = () => {
 
     return (
         <>
-            {loading && <Loading title="Changing your password..." />}
-            {message && <Message />}
-            <ProfilesFormWrapper height={240} onSubmit={onUpdatePassword}>
-                <ProfileFormInput
+            {loading && <Loading />}
+
+            <ProfilesFormWrapper height={230} onSubmit={onUpdatePassword}>
+                {error && (
+                    <p
+                        style={{
+                            color: "red",
+                            position: "absolute",
+                            marginTop: -250,
+                        }}
+                    >
+                        {error}
+                    </p>
+                )}
+                <FormInput
                     Icon={LockOutlined}
                     type="password"
                     placeholder="Current password"
                     value={currentP}
                     onChange={(e) => setCurrentp(e.target.value)}
                 />
-                <ProfileFormInput
+                <FormInput
                     Icon={LockOutlined}
                     type="password"
                     placeholder="New password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <ProfileFormInput
+                <FormInput
                     Icon={LockOutlined}
                     type="password"
                     placeholder="Repeat new password"

@@ -8,13 +8,15 @@ import RightSide from "../../components/sides/rightSide/RightSide";
 import ProfileHeader from "../../components/profileHeader/ProfileHeader";
 import Feed from "../../components/feed/Feed";
 import useAuthContext from "../../hook/useAuthContext";
+import Loading from "../../components/loading/Loading";
 
 const ProfileScreen = () => {
     const { id } = useParams();
 
-    const { user, setMessage } = useAuthContext();
-
     const userPosts = useSelector((state) => state.user.userPosts);
+    const status = useSelector((state) => state.user.status);
+
+    const { user, setMessage } = useAuthContext();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,7 +24,7 @@ const ProfileScreen = () => {
             try {
                 await dispatch(fetchUserPost(id));
             } catch (error) {
-                setMessage(error.message);
+                setMessage({ text: error.message, type: "error" });
             }
         };
 
@@ -34,13 +36,14 @@ const ProfileScreen = () => {
             try {
                 await dispatch(updateProfileBg(e.target.files[0], user));
             } catch (error) {
-                setMessage(error.message);
+                setMessage({ text: error.message, type: "error" });
             }
         }
     }
 
     return (
         <div className="profile">
+            {status === "loading" && <Loading />}
             <ProfileHeader
                 uid={id}
                 background={userPosts?.background}

@@ -7,21 +7,29 @@ import {
     browserLocalPersistence,
 } from "firebase/auth";
 
+import { EmailOutlined, LockOutlined } from "@mui/icons-material";
+
 import { getDoc, setDoc, doc } from "firebase/firestore";
 import { db } from "../../db/db";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import "./register.css";
 import useAuthContext from "../../hook/useAuthContext";
+import FormInput from "../../components/form/FormInput";
+import AppButton from "../../components/Appbutton/AppButton";
+import Loading from "../../components/loading/Loading";
+import useValidation from "../../hook/useValidation";
 
 const Register = () => {
     const [isRegister, setIsRegister] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [cPassword, setCpassword] = useState("");
-    const [error, setError] = useState(null);
+
+    const [loading, setLoading] = useState(false);
 
     const { setUser, dark } = useAuthContext();
+    const { setError, error, validate } = useValidation();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -36,6 +44,7 @@ const Register = () => {
             return setError("Please fill the required field");
 
         setPersistence(auth, browserLocalPersistence).then(async () => {
+            setLoading(true);
             if (isRegister) {
                 try {
                     const { user } = await createUserWithEmailAndPassword(
@@ -60,30 +69,9 @@ const Register = () => {
                     validate(error);
                 }
             }
+            setLoading(false);
         });
     };
-
-    function validate(error) {
-        if (error.code === "auth/network-request-failed") {
-            setError("No internet connection");
-        } else if (error.code === "auth/wrong-password") {
-            setError("Incorrect password");
-        } else if (error.code === "auth/user-not-found") {
-            setError("No user found with this email");
-        } else if (error.code === "auth/weak-password") {
-            setError("The password must be at least 6 character long");
-        } else if (error.code === "auth/invalid-email") {
-            setError("Invalid email");
-        } else if (error.code === "auth/email-already-in-use") {
-            setError("The email already  in use by another user");
-        } else if (error.code === "auth/too-many-requests") {
-            setError(
-                "Access to this account has been temporarily disabled due to many failed login attempts. You can try again later."
-            );
-        } else {
-            setError(error.message);
-        }
-    }
 
     async function checkIsUserInfo(user) {
         const getUser = await getDoc(doc(db, "Users", user.uid));
@@ -118,6 +106,11 @@ const Register = () => {
 
     return (
         <div className="register">
+            {loading && (
+                <Loading
+                    title={isRegister ? "Registering..." : "Logging in..."}
+                />
+            )}
             <div className="registerContainer">
                 <div className="welcomeTextContainer">
                     <h1
@@ -137,49 +130,33 @@ const Register = () => {
                 <div className="registerInputContainer">
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     <form className="registerInputs" onSubmit={submitUser}>
-                        <input
-                            style={{
-                                backgroundColor: dark ? "#333" : "#f0f0f0",
-                                color: dark ? "#fff" : "#000",
-                            }}
+                        <FormInput
+                            Icon={EmailOutlined}
                             type="email"
-                            placeholder="Email"
-                            className="registerInput"
+                            placeholder="Enter your Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <input
-                            style={{
-                                backgroundColor: dark ? "#333" : "#f0f0f0",
-                                color: dark ? "#fff" : "#000",
-                            }}
+
+                        <FormInput
+                            Icon={LockOutlined}
                             type="password"
                             placeholder="Password"
-                            className="registerInput"
-                            autoComplete="on"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+
                         {isRegister && (
-                            <input
-                                style={{
-                                    backgroundColor: dark ? "#333" : "#f0f0f0",
-                                    color: dark ? "#fff" : "#000",
-                                }}
+                            <FormInput
+                                Icon={LockOutlined}
                                 type="password"
                                 placeholder="Repeat password"
-                                className="registerInput"
-                                autoComplete="on"
                                 value={cPassword}
                                 onChange={(e) => setCpassword(e.target.value)}
                             />
                         )}
 
-                        <input
-                            className="registerBtn"
-                            type="submit"
-                            value={isRegister ? "Register" : "Login"}
-                        />
+                        <AppButton title={isRegister ? "Register" : "Login"} />
                     </form>
                     <div className="alreadyHaveAccount">
                         <p

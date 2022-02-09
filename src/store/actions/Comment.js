@@ -10,11 +10,21 @@ import {
     arrayRemove,
     updateDoc,
 } from "firebase/firestore";
+
+import {
+    ref,
+    getStorage,
+    getDownloadURL,
+    uploadBytesResumable,
+    deleteObject,
+} from "firebase/storage";
+
 import uuid from "react-uuid";
 
 import { db } from "../../db/db";
 
 export const FETCH_COMMENTS = "FETCH_COMMENTS";
+const storage = getStorage();
 
 export const fetchComments = (id) => {
     return async (dispatch) => {
@@ -30,13 +40,30 @@ export const fetchComments = (id) => {
     };
 };
 
-export const createNewComment = (comment, postId, uid, userImage, username) => {
+export const createNewComment = (
+    comment,
+    image,
+    postId,
+    uid,
+    userImage,
+    username
+) => {
     return async (dispatch) => {
         const batch = writeBatch(db);
         const id = uuid();
 
+        let url = null;
+
+        if (image?.src) {
+            const storageRef = ref(storage, `images/${image.file.name}`);
+            await uploadBytesResumable(storageRef, image.file);
+
+            url = await getDownloadURL(storageRef);
+        }
+
         batch.set(doc(db, "Comments", id), {
             comment,
+            image: url,
             commentedAt: new Date().getTime(),
             id,
             likes: [],
@@ -84,9 +111,18 @@ export const likeComment = (cid, uid) => {
 export const deleteComment = (cid, pid, uid) => {
     return async (dispatch) => {
         const batch = writeBatch(db);
+
         const pdoc = doc(db, "Posts", pid);
         const cdoc = doc(db, "Comments", cid);
         const udoc = doc(db, "Users", uid);
+
+        const result = await getDoc(cdoc);
+        const image = result.data().image;
+
+        if (image) {
+            const ImageToDelete = ref(storage, image);
+            await deleteObject(ImageToDelete);
+        }
 
         batch.update(pdoc, {
             comments: arrayRemove(cid),

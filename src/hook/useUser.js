@@ -7,16 +7,20 @@ import useAuthContext from "./useAuthContext";
 export const useUser = () => {
     const dispatch = useDispatch();
     const userInfo = useSelector((state) => state.user.user);
-    const { user } = useAuthContext();
+    const { user, setMessage } = useAuthContext();
 
     useEffect(() => {
         const getUserInfo = async () => {
             if (user === null) return;
-            await dispatch(fetchUser(user));
+            try {
+                await dispatch(fetchUser(user));
+            } catch (error) {
+                setMessage({ text: error.message, type: "error" });
+            }
         };
 
         getUserInfo();
-    }, [user, dispatch]);
+    }, [user, setMessage, dispatch]);
 
     return userInfo;
 };

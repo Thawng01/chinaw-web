@@ -1,9 +1,9 @@
 import "./loading.css";
 
-const Loading = ({ title }) => {
+const Loading = () => {
     return (
         <div className="loadingContainer">
-            <span>{title}</span>
+            <div />
         </div>
     );
 };

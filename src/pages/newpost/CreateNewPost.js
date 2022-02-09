@@ -11,7 +11,6 @@ import { useUser } from "../../hook/useUser";
 import useNewPost from "../../hook/useNewPost";
 import useAuthContext from "../../hook/useAuthContext";
 import Loading from "../../components/loading/Loading";
-import Message from "../../components/message/Message";
 
 const CreateNewPost = () => {
     const { id } = useParams();
@@ -32,7 +31,7 @@ const CreateNewPost = () => {
     let name = userInfo?.username ? userInfo?.username : userInfo?.email;
     name = name?.split("@")[0];
 
-    const { dark, message, setMessage } = useAuthContext();
+    const { dark, setMessage } = useAuthContext();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -46,7 +45,7 @@ const CreateNewPost = () => {
             try {
                 await dispatch(fetchSinglePost(id));
             } catch (error) {
-                setMessage(error.message);
+                setMessage({ text: error.message, type: "error" });
             }
         };
 
@@ -80,25 +79,30 @@ const CreateNewPost = () => {
                 className="closeNewPostModalBox"
                 onClick={() => navigate(-1)}
             />
-            {loading && <Loading title="Uploading..." />}
-            {message && <Message />}
+            {loading === "loading" && <Loading />}
+
             <div
                 style={{ backgroundColor: dark ? "#333" : "white" }}
                 className="newPostModalWrapper"
             >
                 <div className="newPostModalUserInfos">
-                    <img
-                        src={userInfo?.image}
-                        alt=""
-                        className="newPostModalUserImg"
-                    />
+                    {userInfo?.image && (
+                        <img
+                            src={userInfo?.image}
+                            alt=""
+                            className="newPostModalUserImg"
+                        />
+                    )}
                     <span className="newPostModalUserName">{name}</span>
                 </div>
 
                 <div className="newPostInputContainer">
                     <form>
                         <textarea
-                            style={{ color: dark ? "#fff" : "#000" }}
+                            style={{
+                                backgroundColor: dark ? "#333" : "#fff",
+                                color: dark ? "#fff" : "#000",
+                            }}
                             ref={ref}
                             type="text"
                             rows={8}

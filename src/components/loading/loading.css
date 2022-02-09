@@ -11,6 +11,32 @@
     z-index: 99;
 }
 
-.loadingContainer span {
-    color: var(--primary);
+@keyframes animationLoading {
+    0% {
+        background-color: var(--secondary);
+        height: 5px;
+        width: 5px;
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        background-color: var(--primary);
+        height: 60px;
+        width: 60px;
+        opacity: 0;
+    }
+}
+
+.loadingContainer div {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    animation-name: animationLoading;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
 }

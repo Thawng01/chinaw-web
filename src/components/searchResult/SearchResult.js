@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 
+import useAuthContext from "../../hook/useAuthContext";
 import "./searchResult.css";
 
 const SearchResult = ({ users, value, searchRef, toProfile }) => {
     const [currentIndex, setCurrentIndex] = useState(-1);
+
+    const { dark } = useAuthContext();
 
     useEffect(() => {
         const myRef = searchRef.current;
@@ -51,7 +54,10 @@ const SearchResult = ({ users, value, searchRef, toProfile }) => {
     }
 
     return (
-        <div className="searchResultContainer">
+        <div
+            style={{ backgroundColor: dark ? "#333" : "#fff" }}
+            className="searchResultContainer"
+        >
             {users?.length === 0 && <p className="searchResults">No result</p>}
             {users?.map((user, index) => {
                 return (
@@ -59,7 +65,11 @@ const SearchResult = ({ users, value, searchRef, toProfile }) => {
                         key={index}
                         style={{
                             backgroundColor:
-                                index === currentIndex ? "#f0f0f0" : "",
+                                index === currentIndex
+                                    ? dark
+                                        ? "#000"
+                                        : "#f0f0f0"
+                                    : "",
                         }}
                         className="searchResults"
                         onClick={() => toProfile(user.uid)}
