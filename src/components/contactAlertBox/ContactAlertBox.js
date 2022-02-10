@@ -34,8 +34,8 @@ const ContactAlertBox = () => {
                 className="alertMessageContainer"
             >
                 <p className="alertMessage">
-                    Sorry bro! This feature is not going to work, but still
-                    developing!
+                    Sorry bro! This feature is being developed, it's not going
+                    to work right now.
                 </p>
             </div>
         </div>

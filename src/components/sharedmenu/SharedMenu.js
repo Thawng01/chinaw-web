@@ -12,6 +12,7 @@ import {
 import LeftSideListItem from "../sides/leftSide/LeftSideListItem";
 import useAuthContext from "../../hook/useAuthContext";
 import Underline from "../Underline";
+import ThemeToggle from "../themeToggle/ThemeToggle";
 
 const SharedMenu = ({ userInfo }) => {
     const { setIsMenuOpen, user } = useAuthContext();
@@ -123,6 +124,12 @@ const SharedMenu = ({ userInfo }) => {
                     />
                 </ul>
             )}
+            <div className="menuThemeContainer">
+                <div className="menuThemeToggle">
+                    <p className="menuThemeLabel">Theme</p>
+                    <ThemeToggle />
+                </div>
+            </div>
         </div>
     );
 };

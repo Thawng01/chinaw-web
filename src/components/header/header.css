@@ -11,7 +11,7 @@
     width: 100%;
     position: sticky;
     z-index: 99;
-    transition: 0.7s;
+    top: 0;
 }
 
 .headerWrapper {
@@ -112,49 +112,6 @@
     align-items: center;
 }
 
-.notificationContainer {
-    display: flex;
-    align-items: center;
-    margin-right: 23px;
-    position: relative;
-    cursor: pointer;
-}
-
-.notiIcon {
-    color: #fff;
-    font-size: 25px;
-}
-
-.notification {
-    position: absolute;
-    background-color: #fff;
-    height: 15px;
-    width: 15px;
-    border-radius: 50%;
-    color: red;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 500;
-    top: -5px;
-    right: -5px;
-}
-
-.darkMode {
-    height: 20px;
-    width: 40px;
-    margin-right: 20px;
-    border-radius: 20px;
-    transition: 0.4s;
-    cursor: pointer;
-}
-
-.darkModeToggle {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    transition: 0.4s;
-}
-
 .accounts {
     display: flex;
     align-items: center;
@@ -181,6 +138,13 @@
     }
 
     .headerCenter {
+        width: 0%;
+        position: absolute;
+        right: 15%;
+        transition: 0.3s;
+    }
+
+    .themeContainer {
         display: none;
     }
 }

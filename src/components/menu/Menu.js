@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import SharedMenu from "../sharedmenu/SharedMenu";
 import { useUser } from "../../hook/useUser";
 import useAuthContext from "../../hook/useAuthContext";
+import ThemeToggle from "../themeToggle/ThemeToggle";
 
 const Menu = () => {
     const { isMenuOpen, setIsMenuOpen, dark } = useAuthContext();

@@ -2,13 +2,13 @@
     position: fixed;
     right: 5%;
     background-color: var(--primary);
-    height: 35px;
-    width: 35px;
+    height: 40px;
+    width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition: 1s;
+    transition: 0.5s;
     cursor: pointer;
     color: #fff;
     font-size: 20px;

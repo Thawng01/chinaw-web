@@ -54,3 +54,24 @@
     padding: 0;
     margin: 15px 0 0px 0;
 }
+
+.menuThemeContainer {
+    display: none;
+}
+
+.menuThemeToggle {
+    display: flex;
+    margin: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menuThemeLabel {
+    font-size: 18px;
+}
+
+@media screen and (max-width: 720px) {
+    .menuThemeContainer {
+        display: block;
+    }
+}

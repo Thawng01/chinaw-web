@@ -2,38 +2,29 @@ import {
     IoEnterOutline,
     IoSearchOutline,
     IoExitOutline,
-    // IoNotificationsOutline,
     IoListOutline,
     IoCloseOutline,
 } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { getAuth, signOut } from "firebase/auth";
 
 import "./header.css";
 import SearchResult from "../searchResult/SearchResult";
 import useSearch from "../../hook/useSearch";
 import useAuthContext from "../../hook/useAuthContext";
-import useScroll from "../../hook/useScroll";
+import ThemeToggle from "../themeToggle/ThemeToggle";
 
 const Header = () => {
     const [value, setValue] = useState("");
-    const { setIsMenuOpen, setUser, user, dark, setDark } = useAuthContext();
+    const { setIsMenuOpen, setUser, user } = useAuthContext();
+    const [showSearchBar, setShowSearchBar] = useState(false);
 
     const { onSearch, users } = useSearch();
-    const { buttonVisible, handleScroll } = useScroll();
 
     const searchRef = useRef();
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [handleScroll]);
 
     const searchUser = (e) => {
         setValue(e.target.value);
@@ -53,28 +44,18 @@ const Header = () => {
         navigate(`/profile/${uid}`);
     }
 
-    const handleDarkMode = () => {
-        setDark(!dark);
-        if (dark) {
-            localStorage.setItem("theme", "light");
-        } else {
-            localStorage.setItem("theme", "dark");
-        }
-    };
+    function hideHeaderSearchBox() {
+        setValue("");
+        setShowSearchBar(false);
+    }
+
+    if (showSearchBar) {
+        searchRef?.current?.focus();
+    }
 
     return (
         <>
-            <div
-                style={{
-                    top:
-                        window.innerWidth <= 720
-                            ? buttonVisible
-                                ? 0
-                                : -60
-                            : 0,
-                }}
-                className="header"
-            >
+            <div className="header">
                 <div className="headerWrapper">
                     <div className="headerLeft">
                         <div
@@ -92,7 +73,17 @@ const Header = () => {
                         </Link>
                     </div>
 
-                    <div className="headerCenter">
+                    <div
+                        className="headerCenter"
+                        style={{
+                            width:
+                                window.innerWidth <= 720
+                                    ? showSearchBar
+                                        ? "65%"
+                                        : 0
+                                    : "",
+                        }}
+                    >
                         <IoSearchOutline className="headerSearchIcon" />
                         <input
                             ref={searchRef}
@@ -101,11 +92,12 @@ const Header = () => {
                             className="headerSearchInput"
                             value={value}
                             onChange={searchUser}
+                            onBlur={() => setShowSearchBar(false)}
                         />
                         {value && (
                             <IoCloseOutline
                                 className="searchCloseIcon"
-                                onClick={() => setValue("")}
+                                onClick={hideHeaderSearchBox}
                             />
                         )}
 
@@ -120,26 +112,16 @@ const Header = () => {
                     </div>
 
                     <div className="headerRight">
-                        <Link to="/search" className="searchContainer">
-                            <IoSearchOutline className="headerLeftSearchIcon" />
-                        </Link>
-                        {/* <div className="notificationContainer">
-                            <IoNotificationsOutline className="notiIcon" />
-                            <span className="notification">1</span>
-                        </div> */}
-
-                        <div
-                            style={{ backgroundColor: dark ? "#fff" : "#000" }}
-                            className="darkMode"
-                            onClick={handleDarkMode}
-                        >
-                            <div
-                                className="darkModeToggle"
-                                style={{
-                                    backgroundColor: dark ? "#000" : "#fff",
-                                    marginLeft: dark ? 20 : 0,
-                                }}
-                            />
+                        {showSearchBar === false && (
+                            <div className="searchContainer">
+                                <IoSearchOutline
+                                    onClick={() => setShowSearchBar(true)}
+                                    className="headerLeftSearchIcon"
+                                />
+                            </div>
+                        )}
+                        <div className="themeContainer">
+                            <ThemeToggle />
                         </div>
 
                         <div className="accounts" onClick={logOut}>
