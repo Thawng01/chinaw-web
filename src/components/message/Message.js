@@ -13,7 +13,7 @@ const Message = () => {
     return (
         <div
             style={{
-                top: message?.text ? 0 : -50,
+                top: message?.text ? 0 : -60,
                 backgroundColor: message?.type === "success" ? "green" : "red",
             }}
             className="error"

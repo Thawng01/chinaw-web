@@ -39,8 +39,8 @@ const ChangePassword = () => {
                 text: "You have successfully changed your password",
                 type: "success",
             });
+            setError(null);
         } catch (error) {
-            // setMessage({ text: error.message, type: "error" });
             validate(error);
         }
 

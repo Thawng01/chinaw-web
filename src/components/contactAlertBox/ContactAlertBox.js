@@ -25,8 +25,8 @@ const ContactAlertBox = () => {
             className="alertBox"
             onClick={(e) => closeAlertMessageBox(e)}
         >
-            <div className="closeAlertBox" onClick={() => setShowAlert(false)}>
-                <IoCloseCircleOutline />
+            <div className="closeAlertBox">
+                <IoCloseCircleOutline onClick={() => setShowAlert(false)} />
             </div>
 
             <div

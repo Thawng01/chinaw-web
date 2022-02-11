@@ -5,22 +5,22 @@ import {
     IoCloseCircleOutline,
     IoCloseOutline,
 } from "react-icons/io5";
-
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import "./commentBox.css";
+import "./comment.css";
 import { fetchComments, createNewComment } from "../../store/actions/Comment";
 import { useUser } from "../../hook/useUser";
 import useAuthContext from "../../hook/useAuthContext";
-import Underline from "../Underline";
-import CommentItem from "./CommentItem";
-import { useLocation, useNavigate } from "react-router-dom";
+import Underline from "../../components/Underline";
+import CommentItem from "../../components/comments/CommentItem";
 
-const CommentBox = ({ onComment, post }) => {
+const Comment = () => {
     const [newComment, setNewComment] = useState("");
     const [indexForDelete, setIndexForDelete] = useState(null);
     const [commentImg, setCommentImg] = useState();
 
+    const { id } = useParams();
     const ref = useRef();
     const inputRef = useRef();
 
@@ -31,6 +31,9 @@ const CommentBox = ({ onComment, post }) => {
     const { dark, setMessage, user } = useAuthContext();
 
     const comments = useSelector((state) => state.comments.comments);
+    const post = useSelector((state) =>
+        state.post.posts.find((p) => p.id === id)
+    );
 
     const dispatch = useDispatch();
 
@@ -42,24 +45,41 @@ const CommentBox = ({ onComment, post }) => {
         }
 
         if (e.target.className === "commentBox") {
-            onComment();
+            navigate(-1);
         }
     };
 
+    const closeCommentBoxByClickingCloseIcon = () => {
+        navigate(-1);
+    };
+
+    const backToHome = () => {
+        navigate(-1);
+    };
+
     useEffect(() => {
-        const getComment = () => {
-            dispatch(fetchComments(post?.id));
+        const getComment = async () => {
+            try {
+                await dispatch(fetchComments(id));
+            } catch (error) {
+                setMessage({ text: error.message, type: "error" });
+            }
         };
 
-        ref?.current?.focus();
         getComment();
-    }, [dispatch, post?.id]);
+        ref?.current?.focus();
+    }, [dispatch, id]);
 
     const createComment = async () => {
         if (user === null) {
             navigate("/register", { state: location });
             return;
         }
+
+        if (!newComment && !commentImg?.src) {
+            return setMessage({ text: "Type something", type: "error" });
+        }
+
         setNewComment("");
         setCommentImg("");
         try {
@@ -67,7 +87,7 @@ const CommentBox = ({ onComment, post }) => {
                 createNewComment(
                     newComment,
                     commentImg,
-                    post?.id,
+                    id,
                     userInfo?.uid,
                     userInfo?.image,
                     userInfo?.username
@@ -110,7 +130,7 @@ const CommentBox = ({ onComment, post }) => {
         <div className="commentBox" onClick={(e) => closeCommentBox(e)}>
             <IoCloseCircleOutline
                 className="closeCommentBox"
-                onClick={onComment}
+                onClick={closeCommentBoxByClickingCloseIcon}
             />
             <div
                 style={{ backgroundColor: dark ? "#333" : "#fff" }}
@@ -123,7 +143,7 @@ const CommentBox = ({ onComment, post }) => {
                     <div className="commentBackIconContainer">
                         <IoArrowBackOutline
                             className="commentBackIcon"
-                            onClick={onComment}
+                            onClick={backToHome}
                         />
                     </div>
 
@@ -178,7 +198,12 @@ const CommentBox = ({ onComment, post }) => {
                     </div>
                     <Send
                         onClick={createComment}
-                        style={{ color: newComment ? "#ff1a8c" : "grey" }}
+                        style={{
+                            color:
+                                newComment || commentImg?.src
+                                    ? "#ff1a8c"
+                                    : "grey",
+                        }}
                         className="commentSend"
                     />
                 </div>
@@ -187,4 +212,4 @@ const CommentBox = ({ onComment, post }) => {
     );
 };
 
-export default CommentBox;
+export default Comment;

@@ -1,12 +1,11 @@
 import { Photo } from "@mui/icons-material";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import "./createNewPost.css";
-import { fetchSinglePost } from "../../store/actions/Post";
 import { useUser } from "../../hook/useUser";
 import useNewPost from "../../hook/useNewPost";
 import useAuthContext from "../../hook/useAuthContext";
@@ -14,7 +13,10 @@ import Loading from "../../components/loading/Loading";
 
 const CreateNewPost = () => {
     const { id } = useParams();
-    const postToUpdate = useSelector((state) => state.post.post);
+    const postToUpdate = useSelector((state) =>
+        state.post.posts.find((p) => p.id === id)
+    );
+
     const [content, setContent] = useState(id ? postToUpdate?.content : "");
     const [newImage, setNewImage] = useState({
         src: id ? postToUpdate?.image : null,
@@ -31,28 +33,15 @@ const CreateNewPost = () => {
     let name = userInfo?.username ? userInfo?.username : userInfo?.email;
     name = name?.split("@")[0];
 
-    const { dark, setMessage } = useAuthContext();
+    const { dark } = useAuthContext();
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const fileInputRef = useRef();
     const ref = useRef();
 
     useEffect(() => {
-        const getPostToUpdate = async () => {
-            if (!id) return;
-
-            try {
-                await dispatch(fetchSinglePost(id));
-            } catch (error) {
-                setMessage({ text: error.message, type: "error" });
-            }
-        };
-
         ref?.current?.focus();
-
-        getPostToUpdate();
-    }, [id, dispatch, setMessage]);
+    }, []);
 
     const closeNewPostModal = (e) => {
         if (e.target.className === "newPostModal") {
@@ -79,7 +68,7 @@ const CreateNewPost = () => {
                 className="closeNewPostModalBox"
                 onClick={() => navigate(-1)}
             />
-            {loading === "loading" && <Loading />}
+            {loading && <Loading />}
 
             <div
                 style={{ backgroundColor: dark ? "#333" : "white" }}
@@ -146,7 +135,11 @@ const CreateNewPost = () => {
                     </div>
                 </div>
                 <div className="newPostModalBtnContainer">
-                    <button className="newPostModalBtn" onClick={createNewPost}>
+                    <button
+                        disabled={content || newImage?.src ? false : true}
+                        className="newPostModalBtn"
+                        onClick={createNewPost}
+                    >
                         {id ? "Update post" : "Create post"}
                     </button>
                     <button

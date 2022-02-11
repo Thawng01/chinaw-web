@@ -19,7 +19,7 @@ const UpdateEmail = () => {
     const [loading, setLoading] = useState(false);
 
     const { setMessage } = useAuthContext();
-    const { error, validate } = useValidation();
+    const { error, validate, setError } = useValidation();
 
     const dispatch = useDispatch();
 
@@ -33,6 +33,7 @@ const UpdateEmail = () => {
                 text: "You have successfully updated your email",
                 type: "success",
             });
+            setError(null);
         } catch (error) {
             validate(error);
         }

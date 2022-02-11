@@ -144,18 +144,6 @@ export const fetchPosts = () => {
     };
 };
 
-export const fetchSinglePost = (id) => {
-    return async (dispatch) => {
-        dispatch({ type: "posts/loading" });
-        const result = await getDoc(doc(db, "Posts", id));
-        if (result.exists === false)
-            throw new Error("No post found with the given id");
-        const post = result.data();
-
-        dispatch({ type: FETCH_SINGLE_POST, payload: post });
-    };
-};
-
 export const deletePost = (id) => {
     return async (dispatch) => {
         const batch = writeBatch(db);

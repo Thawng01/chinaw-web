@@ -23,18 +23,23 @@ const Home = () => {
     useEffect(() => {
         const getPosts = async () => {
             try {
-                await dispatch(fetchPosts());
+                if (posts.length === 0 && loading === "idle") {
+                    await dispatch(fetchPosts());
+                }
             } catch (error) {
                 setMessage({ text: error.message, type: "error" });
             }
         };
-        getPosts();
 
+        getPosts();
+    }, [dispatch, loading, setMessage]);
+
+    useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, [dispatch, setMessage, handleScroll]);
+    }, [handleScroll]);
 
     function scrollToTop() {
         window.scrollTo({

@@ -153,7 +153,10 @@ const Post = ({ post, onComment, onDelete, onSave, uid }) => {
                             />
                         </Link>
                     ) : (
-                        <div className="commentContainer" onClick={onComment}>
+                        <Link
+                            to={`comment/${post?.id}`}
+                            className="commentContainer"
+                        >
                             {post?.comments?.length > 0 && (
                                 <span className="commentNum">
                                     {post?.comments?.length}
@@ -163,7 +166,7 @@ const Post = ({ post, onComment, onDelete, onSave, uid }) => {
                                 style={{ color: dark ? "#fff" : "#000" }}
                                 className="postIcon"
                             />
-                        </div>
+                        </Link>
                     )}
                     <div className="saveIconContainer" onClick={onSave}>
                         {post?.savedBy?.includes(user) ? (

@@ -3,11 +3,6 @@ import { useState } from "react";
 const useValidation = () => {
     const [error, setError] = useState(null);
 
-    // function isInputEmpty(email, password) {
-    //     if (!email || !password)
-    //         return setError("Please fill the required field");
-    // }
-
     function validate(error) {
         if (error.code === "auth/network-request-failed") {
             setError("No internet connection");
