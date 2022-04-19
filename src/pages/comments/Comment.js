@@ -68,7 +68,7 @@ const Comment = () => {
 
         getComment();
         ref?.current?.focus();
-    }, [dispatch, id]);
+    }, [dispatch, id, setMessage]);
 
     const createComment = async () => {
         if (user === null) {

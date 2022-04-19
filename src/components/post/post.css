@@ -14,8 +14,11 @@
     padding: 15px;
 }
 
-.postCardUsername {
+.post-user-info {
     margin: 0 10px;
+}
+
+.postCardUsername {
     font-weight: 600;
     cursor: pointer;
     font-weight: 600;
@@ -28,7 +31,8 @@
 }
 
 .postCardDate {
-    font-size: 14px;
+    font-size: 13px;
+    display: block;
 }
 
 .postCardCenter {

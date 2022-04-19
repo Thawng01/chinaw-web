@@ -20,7 +20,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0 25px;
+    padding: 0 20px;
 }
 
 .headerLeft {
@@ -44,17 +44,17 @@
     color: #fff;
     font-size: 30px;
     margin-top: 5px;
+    margin-left: 5px;
 }
 
 .headerLink {
     text-decoration: none;
-}
-
-.headerTitle {
     margin-right: 20px;
     color: #fff;
     cursor: pointer;
     padding: 5px 10px;
+    font-size: 25px;
+    font-weight: 800;
 }
 
 .headerLink:active {

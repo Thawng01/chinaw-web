@@ -8,6 +8,7 @@ import "./commentItem.css";
 import { likeComment, deleteComment } from "../../store/actions/Comment";
 import { useUser } from "../../hook/useUser";
 import useAuthContext from "../../hook/useAuthContext";
+import formatDate from "../../components/formatDate";
 
 const CommentItem = ({
     comment,
@@ -19,12 +20,16 @@ const CommentItem = ({
     const userInfo = useUser();
     const dispatch = useDispatch();
 
-    const { setMessage, dark } = useAuthContext();
+    const { setMessage, dark, user } = useAuthContext();
 
     let name = comment?.username ? comment?.username : comment?.email;
     name = name?.split("@")[0];
 
     const onLikeComment = async (cid) => {
+        if (user === null) {
+            setMessage({ text: "You have to login first", type: "error" });
+            return;
+        }
         try {
             await dispatch(likeComment(cid, userInfo?.uid));
         } catch (error) {
@@ -62,7 +67,7 @@ const CommentItem = ({
                 )}
                 <div className="commemtBoxInfo">
                     <span className="commentedDate">
-                        {moment(comment?.commentedAt).fromNow()}
+                        {formatDate(comment?.commentedAt)}
                     </span>
                     <ThumbUp
                         onClick={() => onLikeComment(comment.id)}

@@ -15,8 +15,9 @@ import "./post.css";
 import usePostAction from "../../hook/usePostAction";
 import useAuthContext from "../../hook/useAuthContext";
 import Underline from "../Underline";
+import formatDate from "../formatDate";
 
-const Post = ({ post, onComment, onDelete, onSave, uid }) => {
+const Post = ({ post, onDelete, onSave, uid }) => {
     const { dark, user, setMessage } = useAuthContext();
 
     const [readMore, setReadMore] = useState(true);
@@ -58,23 +59,25 @@ const Post = ({ post, onComment, onDelete, onSave, uid }) => {
                 <div className="postCardTop">
                     <img src={post.userImage} className="postCardUserImg" />
 
-                    <Link
-                        className="postUsernameLink"
-                        to={`/profile/${post?.uid}`}
-                    >
-                        <span
-                            style={{ color: dark ? "#fff" : "#000" }}
-                            className="postCardUsername"
+                    <div className="post-user-info">
+                        <Link
+                            className="postUsernameLink"
+                            to={`/profile/${post?.uid}`}
                         >
-                            {username}
+                            <span
+                                style={{ color: dark ? "#fff" : "#000" }}
+                                className="postCardUsername"
+                            >
+                                {username}
+                            </span>
+                        </Link>
+                        <span
+                            style={{ color: dark ? "#ccc" : "gray" }}
+                            className="postCardDate"
+                        >
+                            {formatDate(post?.createdAt)}
                         </span>
-                    </Link>
-                    <span
-                        style={{ color: dark ? "#ccc" : "gray" }}
-                        className="postCardDate"
-                    >
-                        {moment(post?.createdAt).fromNow()}
-                    </span>
+                    </div>
                 </div>
                 <div className="postCardCenter">
                     <div className="postDesc">

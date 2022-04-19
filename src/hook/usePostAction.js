@@ -21,6 +21,10 @@ const usePostAction = () => {
     };
 
     const onPostSave = async (pid) => {
+        if (user === null) {
+            setMessage({ text: "You have to login first", type: "error" });
+            return;
+        }
         try {
             await dispatch(savePost(user, pid));
         } catch (error) {

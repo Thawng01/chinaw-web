@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import "./points.css";
 import { addNewClaimPoint } from "../../store/actions/Point";
-import Message from "../../components/message/Message";
 import useAuthContext from "../../hook/useAuthContext";
 import Loading from "../../components/loading/Loading";
 
@@ -18,7 +17,7 @@ const Points = () => {
 
     const userInfor = useUser();
 
-    const { message, setMessage, dark } = useAuthContext();
+    const { setMessage, dark } = useAuthContext();
 
     const dispatch = useDispatch();
     const claimPoint = async (e) => {

@@ -23,16 +23,14 @@ const Home = () => {
     useEffect(() => {
         const getPosts = async () => {
             try {
-                if (posts.length === 0 && loading === "idle") {
-                    await dispatch(fetchPosts());
-                }
+                await dispatch(fetchPosts());
             } catch (error) {
                 setMessage({ text: error.message, type: "error" });
             }
         };
 
         getPosts();
-    }, [dispatch, loading, setMessage]);
+    }, [dispatch, setMessage]);
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);

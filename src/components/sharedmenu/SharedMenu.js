@@ -8,18 +8,22 @@ import {
     SettingsOutlined,
     HomeOutlined,
 } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 import LeftSideListItem from "../sides/leftSide/LeftSideListItem";
 import useAuthContext from "../../hook/useAuthContext";
-import Underline from "../Underline";
 import ThemeToggle from "../themeToggle/ThemeToggle";
 
 const SharedMenu = ({ userInfo }) => {
     const { setIsMenuOpen, user } = useAuthContext();
 
+    const navigate = useNavigate();
+
     const closeMenu = () => {
         setIsMenuOpen(false);
     };
+
+    const handleLogin = () => navigate("/register");
 
     let name = userInfo?.username ? userInfo?.username : userInfo?.email;
     name = name?.split("@")[0];
@@ -28,42 +32,52 @@ const SharedMenu = ({ userInfo }) => {
         <div className="leftWrapper">
             <div className="leftProfileContainer">
                 {user ? (
-                    <img
-                        src={userInfo?.image}
-                        alt=""
-                        className="leftProfileImg"
-                    />
-                ) : (
-                    <img
-                        src="/assets/placeholder.png"
-                        alt=""
-                        className="leftProfileImg"
-                    />
-                )}
-                <div className="leftProfileInfos">
-                    <p className="leftProfileUsername">{name}</p>
-                    <span>
-                        {userInfo?.post?.length}{" "}
-                        <span>
-                            {userInfo?.post?.length > 1 ? "Posts" : "Post"}
-                        </span>
-                    </span>
-                    {userInfo?.bio && (
-                        <p className="leftDesc">{userInfo.bio}</p>
-                    )}
-                    <p className="leftPoint">
-                        Points:{" "}
-                        <span>
-                            {userInfo?.points}
+                    <>
+                        <img
+                            src={userInfo?.image}
+                            alt=""
+                            className="leftProfileImg"
+                        />
+                        <div className="leftProfileInfos">
+                            <p className="leftProfileUsername">{name}</p>
                             <span>
-                                {userInfo?.points > 1 ? " points" : " point"}
+                                {userInfo?.post?.length}{" "}
+                                <span>
+                                    {userInfo?.post?.length > 1
+                                        ? "Posts"
+                                        : "Post"}
+                                </span>
                             </span>
+                            {userInfo?.bio && (
+                                <p className="leftDesc">{userInfo.bio}</p>
+                            )}
+
+                            <p className="leftPoint">
+                                Points:{" "}
+                                <span>
+                                    {userInfo?.points}
+                                    <span>
+                                        {userInfo?.points > 1
+                                            ? " points"
+                                            : " point"}
+                                    </span>
+                                </span>
+                            </p>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <img
+                            src="assets/placeholder.png"
+                            alt=""
+                            className="leftProfileImg"
+                        />
+                        <span className="left-side-login" onClick={handleLogin}>
+                            Login
                         </span>
-                    </p>
-                </div>
+                    </>
+                )}
             </div>
-            <Underline />
-            {/* <div className="leftLine" /> */}
 
             {user && (
                 <ul className="leftItems">

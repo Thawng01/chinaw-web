@@ -16,7 +16,7 @@ const NewPost = () => {
                 <img src={userInfo?.image} alt="" className="newPostImg" />
             ) : (
                 <img
-                    src={"/assets/placeholder.png"}
+                    src={"assets/placeholder.png"}
                     alt=""
                     className="newPostImg"
                 />

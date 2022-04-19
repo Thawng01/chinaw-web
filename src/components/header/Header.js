@@ -69,7 +69,7 @@ const Header = () => {
                             className="headerLink"
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            <h2 className="headerTitle">Chin Aw</h2>
+                            Chin Aw
                         </Link>
                     </div>
 
