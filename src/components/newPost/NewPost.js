@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./newPost.css";
 import { useUser } from "../../hook/useUser";
@@ -6,7 +6,17 @@ import useAuthContext from "../../hook/useAuthContext";
 
 const NewPost = () => {
     const userInfo = useUser();
-    const { user, dark } = useAuthContext();
+    const navigate = useNavigate();
+    const { user, dark, setMessage } = useAuthContext();
+
+    const handleNewPost = () => {
+        if (user === null) {
+            setMessage({ text: "You have to login first", type: "error" });
+            return;
+        }
+        navigate("/create_new_post");
+    };
+
     return (
         <div
             style={{ backgroundColor: dark ? "#333" : "white" }}
@@ -21,10 +31,10 @@ const NewPost = () => {
                     className="newPostImg"
                 />
             )}
-            <Link
-                to="/create_new_post"
+            <div
                 style={{ backgroundColor: dark ? "#4d4d4d" : "#f1f1f1" }}
                 className="newPostBtn"
+                onClick={handleNewPost}
             >
                 <span
                     style={{ color: dark ? "#ccc" : "gray" }}
@@ -32,7 +42,7 @@ const NewPost = () => {
                 >
                     What's in your mind?
                 </span>
-            </Link>
+            </div>
         </div>
     );
 };
