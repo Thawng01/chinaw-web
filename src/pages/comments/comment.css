@@ -162,10 +162,10 @@
         height: 80%;
     }
     .commentBoxHeaderContainer {
-        height: 10%;
+        height: 55px;
     }
     .commentInputContainer {
-        height: 10%;
+        height: 50px;
     }
 
     .closeCommentBox {

@@ -24,7 +24,7 @@ const Faqs = () => {
         };
 
         getFqas();
-    }, [setFqas]);
+    }, [setFqas, setMessage]);
 
     return (
         <div className="faqsContainer">

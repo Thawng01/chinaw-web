@@ -147,7 +147,11 @@ const Comment = () => {
                         />
                     </div>
 
-                    <img src={post?.userImage} className="postImgInComment" />
+                    <img
+                        src={post?.userImage}
+                        alt=""
+                        className="postImgInComment"
+                    />
                     <span className="postUsernameInComment">
                         {`${post?.username}'s post`}
                     </span>
@@ -163,6 +167,7 @@ const Comment = () => {
                             />
                             <img
                                 src={commentImg.src}
+                                alt=""
                                 className="selectedCommentImg"
                             />
                         </div>

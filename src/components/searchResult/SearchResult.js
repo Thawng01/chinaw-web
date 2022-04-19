@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import useAuthContext from "../../hook/useAuthContext";
 import "./searchResult.css";
@@ -8,21 +8,8 @@ const SearchResult = ({ users, value, searchRef, toProfile }) => {
 
     const { dark } = useAuthContext();
 
-    useEffect(() => {
-        const myRef = searchRef.current;
-        if (users && value) {
-            myRef.addEventListener("keyup", onPressArrowKey);
-        } else {
-            myRef.removeEventListener("keyup", onPressArrowKey);
-        }
-
-        return () => {
-            myRef.removeEventListener("keyup", onPressArrowKey);
-        };
-    }, [users, value, searchRef, onPressArrowKey]);
-
     let activeIndex = -1;
-    function onPressArrowKey(e) {
+    const onPressArrowKey = useCallback((e) => {
         const up = e.key === "ArrowUp";
         const down = e.key === "ArrowDown";
         const enter = e.key === "Enter";
@@ -51,7 +38,20 @@ const SearchResult = ({ users, value, searchRef, toProfile }) => {
         if (enter) {
             toProfile(users[activeIndex]?.uid);
         }
-    }
+    }, []);
+
+    useEffect(() => {
+        const myRef = searchRef.current;
+        if (users && value) {
+            myRef.addEventListener("keyup", onPressArrowKey);
+        } else {
+            myRef.removeEventListener("keyup", onPressArrowKey);
+        }
+
+        return () => {
+            myRef.removeEventListener("keyup", onPressArrowKey);
+        };
+    }, [users, value, searchRef, onPressArrowKey]);
 
     return (
         <div

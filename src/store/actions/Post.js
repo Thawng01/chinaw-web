@@ -56,8 +56,8 @@ export const addNewPost = (content, image, uid, pid, imageToUpdate) => {
         if (!pid) {
             if (postT && postPower === 0) {
                 const now = moment(new Date());
-                const diff = now.diff(postT, "minutes");
-                if (diff <= 2) {
+                const diff = now.diff(postT, "days");
+                if (diff < 3) {
                     throw new Error("You can create only three posts per day");
                 }
             }

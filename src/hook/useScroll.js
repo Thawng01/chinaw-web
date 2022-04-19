@@ -1,12 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
 const useScroll = () => {
     const [buttonVisible, setButtonVisible] = useState(false);
+    const prevScrollPos = useRef(window.pageYOffset);
 
-    let prevScrollPos = window.pageYOffset;
     const handleScroll = useCallback(() => {
         let currentScrollPos = window.pageYOffset;
-        if (currentScrollPos > prevScrollPos) {
+        if (currentScrollPos > prevScrollPos.current) {
             setButtonVisible(false);
         } else {
             setButtonVisible(true);
@@ -16,7 +16,7 @@ const useScroll = () => {
             setButtonVisible(false);
         }
 
-        prevScrollPos = currentScrollPos;
+        prevScrollPos.current = currentScrollPos;
     }, [setButtonVisible]);
 
     return { handleScroll, buttonVisible };

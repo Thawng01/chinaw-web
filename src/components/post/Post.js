@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import moment from "moment";
 import { useState } from "react";
 import {
     IoBookmarkOutline,
@@ -57,7 +56,11 @@ const Post = ({ post, onDelete, onSave, uid }) => {
                 className="postCards"
             >
                 <div className="postCardTop">
-                    <img src={post.userImage} className="postCardUserImg" />
+                    <img
+                        src={post.userImage}
+                        alt=""
+                        className="postCardUserImg"
+                    />
 
                     <div className="post-user-info">
                         <Link

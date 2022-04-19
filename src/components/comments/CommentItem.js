@@ -1,6 +1,5 @@
 import { memo } from "react";
 import { useDispatch } from "react-redux";
-import moment from "moment";
 import { ThumbUp } from "@mui/icons-material";
 import { IoEllipsisVertical } from "react-icons/io5";
 
@@ -47,7 +46,7 @@ const CommentItem = ({
 
     return (
         <div className="commentorsContainer">
-            <img src={comment.userImage} className="commentorImg" />
+            <img src={comment.userImage} alt="" className="commentorImg" />
             <div className="commentorInfos">
                 <div
                     style={{
@@ -63,7 +62,7 @@ const CommentItem = ({
                 </div>
 
                 {comment?.image && (
-                    <img src={comment?.image} className="commentImg" />
+                    <img src={comment?.image} alt="" className="commentImg" />
                 )}
                 <div className="commemtBoxInfo">
                     <span className="commentedDate">
