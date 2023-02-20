@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+Mini Social Media App using react and firebase
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
