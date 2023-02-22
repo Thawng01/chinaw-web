@@ -1,10 +1,10 @@
-**Mini Social Media App using react and firebase
+**Mini Social Media App using react and firebase**
  
  [Demo](https://thawng01.github.io/chinaw-web/)
 
-This mini Social Media App is named "**Chin Aw". 
+This mini Social Media App is named "**Chin Aw**". 
 
-**What is Chin Aw?
+**What is Chin Aw?**
 
 Chin Aw is a mini social media app on which you can create your account and publish your content. You can still explore the newsfeed even without creating an account. But publishing your content or to like or comment on the content of other people requires an account. Creating your account is completely free. Try one if you don't mind.
 
